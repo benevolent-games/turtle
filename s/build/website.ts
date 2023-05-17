@@ -1,54 +1,77 @@
 
+import shell from "shelljs"
 import {resolve} from "path"
 
-import {Files} from "../utils/files.js"
-import {make_template_basics} from "./parts/template_basics.js"
+import {Path} from "../utils/path.js"
+import {find_files} from "../utils/find_files.js"
+import {FileWriter} from "../utils/file_writer.js"
+import {make_template_basics} from "./parts/make_template_basics.js"
 import {load_and_render_template} from "./parts/load_and_render_template.js"
-import {obtain_paths_to_template_files} from "./parts/obtain_paths_to_template_files.js"
-import {ascertain_result_file_destination_path} from "./parts/ascertain_result_file_destination_path.js"
+import {ascertain_html_destination_path} from "./parts/ascertain_html_destination_path.js"
 
 export async function build_website<xContext extends {}>({
 		context,
 		excludes,
-		input_directory,
 		output_directory,
+		input_directories,
+		on_file_copy = () => {},
 		on_file_write = () => {},
 	}: {
 		context: xContext
 		excludes: string[]
-		input_directory: string
 		output_directory: string
-		on_file_write?(path: string): void
+		input_directories: string[]
+		on_file_copy?(path: Path, out: Path): void
+		on_file_write?(path: Path, out: Path): void
 	}) {
 
-	const files = new Files(output_directory)
+	shell.mkdir("-p", output_directory)
+	const writer = new FileWriter(output_directory)
+	const paths = {
+		copyables: await find_files(input_directories, excludes, "**/*.css"),
+		templates: await find_files(input_directories, excludes, "**/*.html.js"),
+	}
 
-	const template_paths = await obtain_paths_to_template_files(
-		input_directory,
-		excludes,
-	)
+	async function copy_files(path: Path) {
+		const from = path.relative
+		const to = output_directory + "/" + path.partial
+		shell.cp(from, to)
+		on_file_copy(path, {
+			directory: output_directory,
+			partial: path.partial,
+			relative: to,
+			absolute: resolve(to),
+		})
+	}
 
-	async function build_webpage(template_path: string) {
-		const destination = ascertain_result_file_destination_path(
-			input_directory,
-			template_path,
-		)
-
+	async function build_webpage(path: Path) {
 		const result_html = await load_and_render_template(
-			template_path,
+			path.relative,
 			make_template_basics({
-				template_path,
-				input_directory,
 				output_directory,
+				template_path: path.relative,
+				input_directory: path.directory,
 			}),
 			context,
 		)
 
-		const full_destination_path = resolve(files.actual_path(destination))
-		await files.write(destination, result_html)
-		on_file_write(full_destination_path)
+		const destination = ascertain_html_destination_path(
+			path.directory,
+			path.relative,
+		)
+
+		const full_destination_path = writer.actual_path(destination)
+		const absolute_destination_path = resolve(full_destination_path)
+		await writer.write(destination, result_html)
+		on_file_write(path, {
+			directory: output_directory,
+			relative: full_destination_path,
+			partial: destination,
+			absolute: absolute_destination_path,
+		})
 	}
 
-	await Promise.all(template_paths.map(build_webpage))
+	await Promise.all(paths.copyables.map(copy_files))
+	// await Promise.all(paths.templates.map(build_webpage))
 }
 

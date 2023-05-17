@@ -1,6 +1,6 @@
 
 import {HtmlTemplate} from "../../html/template.js"
-import {TemplateBasics} from "./template_basics.js"
+import {TemplateBasics} from "../template_basics.js"
 import {load_template_function} from "./load_template_function.js"
 
 export async function load_and_render_template(

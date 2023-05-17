@@ -1,11 +1,7 @@
 
 import {dirname, relative, resolve} from "path"
-import {make_hash_versioner, HashVersioner} from "../../utils/hash_versioner.js"
-
-export interface TemplateBasics {
-	base: string
-	v: HashVersioner
-}
+import {TemplateBasics} from "../template_basics.js"
+import {make_hash_versioner} from "../../utils/hash_versioner.js"
 
 export function make_template_basics({
 		template_path,

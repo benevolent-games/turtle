@@ -1,7 +1,7 @@
 
 import {escape_regex} from "../../utils/escape_regex.js"
 
-export function ascertain_result_file_destination_path(
+export function ascertain_html_destination_path(
 		input_directory: string,
 		template_path: string,
 	) {

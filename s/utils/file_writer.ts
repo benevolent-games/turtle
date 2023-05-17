@@ -1,10 +1,10 @@
 
 import {join, dirname} from "path"
-import {readFile, writeFile, mkdir} from "fs/promises"
+import {writeFile, mkdir} from "fs/promises"
 
 const encoding = "utf-8"
 
-export class Files {
+export class FileWriter {
 	#root: string
 
 	constructor(root: string) {
@@ -13,10 +13,6 @@ export class Files {
 
 	actual_path(path: string) {
 		return join(this.#root, path)
-	}
-
-	async read(path: string) {
-		return readFile(this.actual_path(path), encoding)
 	}
 
 	async write(path: string, text: string) {
