@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 import {Path} from "./utils/path.js"
 import {cli, color} from "@benev/argv"
