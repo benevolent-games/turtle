@@ -42,7 +42,7 @@ export function make_hash_versioner({root, origin}: {
 		const path = getPathForUrl(url)
 		const hash = await computeHash(path)
 		const query = url.match(/\?(.+)$/)
-		const tag = `v=${hash}`
+		const tag = `v=${hash.slice(0, 8)}`
 		return normalize(
 			query
 				? url + "&" + tag

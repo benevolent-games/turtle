@@ -10,18 +10,3 @@ export function debase_path(
 	return fullpath.replace(lead_regex, "")
 }
 
-// export function debase_path(
-// 		directories: string[],
-// 		fullpath: string,
-// 	) {
-
-// 	const regexes = directories.map(
-// 		dir => new RegExp("^" + escape_regex(dir) + "/")
-// 	)
-
-// 	for (const regex of regexes)
-// 		fullpath = fullpath.replace(regex, "")
-
-// 	return fullpath
-// }
-

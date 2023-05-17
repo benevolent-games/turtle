@@ -17,7 +17,7 @@
 		"compile": "tsc",
 		"start": "run-p watch",
 		"watch": "tsc -w",
-		"demo": "rm -rf x/web && node x/cli.js s/demo:x/demo x/web",
+		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo",
 		"help": "node x/cli.js --help",
 		"test": "exit 0"
 	},

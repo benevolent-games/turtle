@@ -1,18 +1,21 @@
 
-import {escape_regex} from "../../utils/escape_regex.js"
+import {join, resolve} from "path"
+import {Path} from "../../utils/path.js"
 
 export function ascertain_html_destination_path(
-		input_directory: string,
-		template_path: string,
-	) {
+		output_directory: string,
+		template_path: Path,
+	): Path {
 
-	const html_directory_regex = new RegExp(
-		"^" + escape_regex(input_directory) + "/"
-	)
+	const partial = template_path.partial.replace(/\.js$/, "")
+	const relative = join(output_directory, partial)
+	const absolute = resolve(relative)
 
-	return template_path
-		.replace(html_directory_regex, "./html/")
-		.replace(/^\.\/html\//, "")
-		.replace(/\.js$/, "")
+	return {
+		directory: output_directory,
+		partial,
+		relative,
+		absolute,
+	}
 }
 

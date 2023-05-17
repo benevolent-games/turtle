@@ -13,6 +13,7 @@ export async function load_and_render_template(
 
 	const template = await template_function(basics, context) as HtmlTemplate
 
-	return template.render()
+	const result = await template.render()
+	return result.trim() + "\n"
 }
 

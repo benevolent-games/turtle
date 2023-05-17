@@ -15,6 +15,6 @@ export * from "./html/webpage.js"
 export * from "./utils/escape_html.js"
 export * from "./utils/escape_regex.js"
 export * from "./utils/find_files.js"
-export * from "./utils/file_writer.js"
+export * from "./utils/write_file.js"
 export * from "./utils/hash_versioner.js"
 

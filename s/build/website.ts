@@ -4,7 +4,7 @@ import {resolve} from "path"
 
 import {Path} from "../utils/path.js"
 import {find_files} from "../utils/find_files.js"
-import {FileWriter} from "../utils/file_writer.js"
+import {write_file} from "../utils/write_file.js"
 import {make_template_basics} from "./parts/make_template_basics.js"
 import {load_and_render_template} from "./parts/load_and_render_template.js"
 import {ascertain_html_destination_path} from "./parts/ascertain_html_destination_path.js"
@@ -26,10 +26,18 @@ export async function build_website<xContext extends {}>({
 	}) {
 
 	shell.mkdir("-p", output_directory)
-	const writer = new FileWriter(output_directory)
+
 	const paths = {
-		copyables: await find_files(input_directories, excludes, "**/*.css"),
-		templates: await find_files(input_directories, excludes, "**/*.html.js"),
+		copyables: await find_files(
+			input_directories,
+			[...excludes, "**/*.html.js"],
+			"**/*.{css,js}",
+		),
+		templates: await find_files(
+			input_directories,
+			excludes,
+			"**/*.html.js",
+		),
 	}
 
 	async function copy_files(path: Path) {
@@ -56,22 +64,15 @@ export async function build_website<xContext extends {}>({
 		)
 
 		const destination = ascertain_html_destination_path(
-			path.directory,
-			path.relative,
+			output_directory,
+			path,
 		)
 
-		const full_destination_path = writer.actual_path(destination)
-		const absolute_destination_path = resolve(full_destination_path)
-		await writer.write(destination, result_html)
-		on_file_write(path, {
-			directory: output_directory,
-			relative: full_destination_path,
-			partial: destination,
-			absolute: absolute_destination_path,
-		})
+		await write_file(destination.relative, result_html)
+		on_file_write(path, destination)
 	}
 
 	await Promise.all(paths.copyables.map(copy_files))
-	// await Promise.all(paths.templates.map(build_webpage))
+	await Promise.all(paths.templates.map(build_webpage))
 }
 
