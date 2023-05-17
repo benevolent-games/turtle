@@ -1,6 +1,6 @@
 
 import {HtmlTemplate} from "./template.js"
-import {TemplateBasics} from "../build/template_basics.js"
+import {TemplateBasics} from "../build/types/template_basics.js"
 
 export type WebpageMaker = (basics: TemplateBasics) => Promise<HtmlTemplate>
 

@@ -1,6 +1,6 @@
 
 import {dirname, relative, resolve} from "path"
-import {TemplateBasics} from "../template_basics.js"
+import {TemplateBasics} from "../types/template_basics.js"
 import {make_hash_versioner} from "../../utils/hash_versioner.js"
 
 export function make_template_basics({

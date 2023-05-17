@@ -1,13 +1,10 @@
 
 import shell from "shelljs"
-import {resolve} from "path"
 
-import {Path} from "../utils/path.js"
+import {build_webpage} from "./webpage.js"
+import {copy_file} from "./parts/copy_file.js"
 import {find_files} from "../utils/find_files.js"
-import {write_file} from "../utils/write_file.js"
-import {make_template_basics} from "./parts/make_template_basics.js"
-import {load_and_render_template} from "./parts/load_and_render_template.js"
-import {ascertain_html_destination_path} from "./parts/ascertain_html_destination_path.js"
+import {OutputLogger} from "./types/output_logger.js"
 
 export async function build_website<xContext extends {}>({
 		context,
@@ -21,8 +18,8 @@ export async function build_website<xContext extends {}>({
 		excludes: string[]
 		output_directory: string
 		input_directories: string[]
-		on_file_copy?(path: Path, out: Path): void
-		on_file_write?(path: Path, out: Path): void
+		on_file_copy?: OutputLogger
+		on_file_write?: OutputLogger
 	}) {
 
 	shell.mkdir("-p", output_directory)
@@ -30,8 +27,8 @@ export async function build_website<xContext extends {}>({
 	const paths = {
 		copyables: await find_files(
 			input_directories,
-			[...excludes, "**/*.html.js"],
-			"**/*.{css,js}",
+			[...excludes, "**/*.{html.js,ts}"],
+			"**/*",
 		),
 		templates: await find_files(
 			input_directories,
@@ -40,39 +37,16 @@ export async function build_website<xContext extends {}>({
 		),
 	}
 
-	async function copy_files(path: Path) {
-		const from = path.relative
-		const to = output_directory + "/" + path.partial
-		shell.cp(from, to)
-		on_file_copy(path, {
-			directory: output_directory,
-			partial: path.partial,
-			relative: to,
-			absolute: resolve(to),
-		})
-	}
-
-	async function build_webpage(path: Path) {
-		const result_html = await load_and_render_template(
-			path.relative,
-			make_template_basics({
-				output_directory,
-				template_path: path.relative,
-				input_directory: path.directory,
-			}),
-			context,
+	await Promise.all(
+		paths.copyables.map(
+			source => copy_file(source, output_directory, on_file_copy)
 		)
+	)
 
-		const destination = ascertain_html_destination_path(
-			output_directory,
-			path,
+	await Promise.all(
+		paths.templates.map(
+			path => build_webpage(path, output_directory, context, on_file_write)
 		)
-
-		await write_file(destination.relative, result_html)
-		on_file_write(path, destination)
-	}
-
-	await Promise.all(paths.copyables.map(copy_files))
-	await Promise.all(paths.templates.map(build_webpage))
+	)
 }
 

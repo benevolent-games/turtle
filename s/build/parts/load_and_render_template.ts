@@ -1,6 +1,7 @@
 
 import {HtmlTemplate} from "../../html/template.js"
-import {TemplateBasics} from "../template_basics.js"
+import { untab } from "../../html/untab.js"
+import {TemplateBasics} from "../types/template_basics.js"
 import {load_template_function} from "./load_template_function.js"
 
 export async function load_and_render_template(
@@ -13,7 +14,7 @@ export async function load_and_render_template(
 
 	const template = await template_function(basics, context) as HtmlTemplate
 
-	const result = await template.render()
+	const result = untab(await template.render())
 	return result.trim() + "\n"
 }
 

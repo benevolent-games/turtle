@@ -17,8 +17,8 @@
 		"compile": "tsc",
 		"start": "run-p watch",
 		"watch": "tsc -w",
-		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo",
-		"help": "node x/cli.js --help",
+		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo +verbose",
+		"help": "node x/cli.js +help",
 		"test": "exit 0"
 	},
 	"dependencies": {
