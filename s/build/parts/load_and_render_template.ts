@@ -1,6 +1,6 @@
 
+import {untab} from "../../html/untab.js"
 import {HtmlTemplate} from "../../html/template.js"
-import { untab } from "../../html/untab.js"
 import {TemplateBasics} from "../types/template_basics.js"
 import {load_template_function} from "./load_template_function.js"
 
