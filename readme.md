@@ -66,10 +66,10 @@ export default webpage(async({v}) => html`
 
 ### remember, the templates are just async js functions
 - so you can import other modules, read and write files, whatever you want
+- thanks to top-level await, you could have a module read yaml files or whatever, and then templates can import that data
 
 <br/>
 
 ### i'm thinking of adding more turtle functionality later..
-- `context.turtle.js` could return a context object that is passed to all templates
 - some smart way to add custom build scripts that can, like, build a whole directory of yamls or markdowns or whatever, and generate a ton of pages (as opposed to being limited to just one `.html.js` per generated page)
 
