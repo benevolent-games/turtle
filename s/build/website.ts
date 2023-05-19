@@ -4,6 +4,7 @@ import shell from "shelljs"
 import {build_webpage} from "./webpage.js"
 import {copy_file} from "./parts/copy_file.js"
 import {find_files} from "../utils/find_files.js"
+import {ScriptMeta} from "./types/script_meta.js"
 import {OutputLogger} from "./types/output_logger.js"
 
 export async function build_website<xContext extends {}>({
@@ -25,9 +26,14 @@ export async function build_website<xContext extends {}>({
 	shell.mkdir("-p", output_directory)
 
 	const paths = {
+		turtle_scripts: await find_files(
+			input_directories,
+			excludes,
+			"**/*.turtle.js",
+		),
 		copyables: await find_files(
 			input_directories,
-			[...excludes, "**/*.{html.js,ts}"],
+			[...excludes, "**/*.{ts,html.js,turtle.js}"],
 			"**/*",
 		),
 		templates: await find_files(
@@ -39,13 +45,27 @@ export async function build_website<xContext extends {}>({
 
 	await Promise.all(
 		paths.copyables.map(
-			source => copy_file(source, output_directory, on_file_copy)
+			async path => copy_file(path, output_directory, on_file_copy)
 		)
 	)
 
 	await Promise.all(
 		paths.templates.map(
-			path => build_webpage(path, output_directory, context, on_file_write)
+			async path => build_webpage(path, output_directory, context, on_file_write)
+		)
+	)
+
+	await Promise.all(
+		paths.turtle_scripts.map(
+			async path => {
+				const script = await import(path.absolute)
+				const meta: ScriptMeta = {
+					path,
+					output_directory,
+					on_file_write,
+				}
+				await script.default(meta)
+			}
 		)
 	)
 }

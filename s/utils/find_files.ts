@@ -13,7 +13,7 @@ export async function find_files(
 		directories.map(async directory => {
 			const fullpattern = directory + "/" + pattern
 			const ignore = excludes.map(exclude => join(directory, exclude))
-			const full_paths = await glob(fullpattern, {ignore})
+			const full_paths = await glob(fullpattern, {ignore, nodir: true})
 			return full_paths.map(relative => ({
 				relative,
 				directory,
