@@ -1,29 +1,27 @@
 
-import shell from "shelljs"
-
-import {build_webpage} from "./webpage.js"
-import {copy_file} from "./parts/copy_file.js"
 import {find_files} from "../utils/find_files.js"
-import {ScriptMeta} from "./types/script_meta.js"
-import {OutputLogger} from "./types/output_logger.js"
+import {copy_all_files} from "./routines/copy_all_files.js"
+import {OutputLogger, TurtleScriptLogger} from "./types/loggers.js"
+import {build_all_webpages} from "./routines/build_all_webpages.js"
+import {run_all_turtle_scripts} from "./routines/run_all_turtle_scripts.js"
 
 export async function build_website<xContext extends {}>({
 		context,
 		excludes,
 		output_directory,
 		input_directories,
-		on_file_copy = () => {},
-		on_file_write = () => {},
+		on_file_copied = () => {},
+		on_file_written = () => {},
+		on_turtle_script_executed = () => {},
 	}: {
 		context: xContext
 		excludes: string[]
 		output_directory: string
 		input_directories: string[]
-		on_file_copy?: OutputLogger
-		on_file_write?: OutputLogger
+		on_file_copied?: OutputLogger
+		on_file_written?: OutputLogger
+		on_turtle_script_executed?: TurtleScriptLogger
 	}) {
-
-	shell.mkdir("-p", output_directory)
 
 	const paths = {
 		turtle_scripts: await find_files(
@@ -43,30 +41,24 @@ export async function build_website<xContext extends {}>({
 		),
 	}
 
-	await Promise.all(
-		paths.copyables.map(
-			async path => copy_file(path, output_directory, on_file_copy)
-		)
+	await copy_all_files(
+		paths.copyables,
+		output_directory,
+		on_file_copied,
 	)
 
-	await Promise.all(
-		paths.templates.map(
-			async path => build_webpage(path, output_directory, context, on_file_write)
-		)
+	await build_all_webpages(
+		paths.templates,
+		output_directory,
+		context,
+		on_file_written,
 	)
 
-	await Promise.all(
-		paths.turtle_scripts.map(
-			async path => {
-				const script = await import(path.absolute)
-				const meta: ScriptMeta = {
-					path,
-					output_directory,
-					on_file_write,
-				}
-				await script.default(meta)
-			}
-		)
+	await run_all_turtle_scripts(
+		paths.turtle_scripts,
+		output_directory,
+		on_file_written,
+		on_turtle_script_executed,
 	)
 }
 

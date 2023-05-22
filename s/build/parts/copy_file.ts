@@ -1,12 +1,12 @@
 
 import shell from "shelljs"
-import {resolve} from "path"
+import {dirname, resolve} from "path"
 import {Path} from "../../utils/path.js"
 
 export async function copy_file(
 		source: Path,
 		output_directory: string,
-		on_file_copy: (source: Path, target: Path) => void = () => {},
+		on_file_copied: (source: Path, target: Path) => void = () => {},
 	) {
 
 	const relative = output_directory + "/" + source.partial
@@ -23,8 +23,9 @@ export async function copy_file(
 	)
 
 	if (is_not_the_same_file) {
+		shell.mkdir("-p", dirname(target.relative))
 		shell.cp(source.relative, target.relative)
-		on_file_copy(source, target)
+		on_file_copied(source, target)
 	}
 }
 

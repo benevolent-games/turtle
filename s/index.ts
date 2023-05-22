@@ -2,7 +2,7 @@
 export * from "./build/website.js"
 export * from "./build/webpage.js"
 export * from "./build/types/template_basics.js"
-export * from "./build/types/output_logger.js"
+export * from "./build/types/loggers.js"
 
 export * from "./errors/hash_versioner_error.js"
 

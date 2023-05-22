@@ -73,7 +73,15 @@ await build_website({
 	input_directories: params.in.split(":"),
 	output_directory: params.out,
 	excludes: params.excludes?.split(":") ?? [],
-	on_file_copy: log("copy"),
-	on_file_write: log("render"),
+	on_file_copied: log("copied"),
+	on_file_written: log("rendered"),
+	on_turtle_script_executed: path => {
+		if (params.verbose) {
+			console.log([
+				color.blue("executed"),
+				color.cyan(path.relative)
+			].join(" "))
+		}
+	},
 })
 

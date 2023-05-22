@@ -1,9 +1,7 @@
 
 import {webpage, html} from "../../index.js"
 
-export type StampContext = {x: number}
-
-export default webpage<StampContext>(async({v}, {x}) => html`
+export default webpage<{x: number}>(async({v}, {x}) => html`
 
 	<!doctype html>
 	<html>
