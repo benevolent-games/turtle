@@ -28,8 +28,12 @@ jobs:
     - name: 🧪 test
       run: npm test
 
+    - name: 🎁 demo
+      run: npm run demo -s
+
     - name: 🚀 npm publish
       uses: JS-DevTools/npm-publish@v1
       with:
         token: ${{ secrets.NPM_TOKEN }}
         access: public
+
