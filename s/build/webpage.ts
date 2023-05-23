@@ -20,10 +20,10 @@ export async function build_webpage<xContext extends {}>(
 	await write_webpage<xContext>({
 		path,
 		context,
+		on_file_written,
+		output_directory,
 		destination: destination.relative,
 		template: await load_template_function<xContext>(path.absolute),
-		output_directory,
-		on_file_written,
 	})
 }
 
