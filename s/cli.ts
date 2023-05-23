@@ -2,7 +2,7 @@
 
 import {Path} from "./utils/path.js"
 import {cli, color} from "@benev/argv"
-import {build_website} from "./build/website.js"
+import {build_website} from "./build/build_website.js"
 import {WebsiteLoggers} from "./build/types/loggers.js"
 
 const program_name = color.green("🐢 @benev/turtle")
