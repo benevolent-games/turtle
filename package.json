@@ -12,9 +12,10 @@
 		"s"
 	],
 	"scripts": {
-		"build": "run-s clean compile",
+		"build": "run-s clean compile permissions",
 		"clean": "rm -rf x && mkdir x",
 		"compile": "tsc",
+		"permissions": "chmod +x x/cli.js",
 		"start": "http-server x/demo",
 		"watch": "tsc -w",
 		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo --excludes **/*.partial.html.js +verbose",
