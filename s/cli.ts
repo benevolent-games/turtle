@@ -3,6 +3,7 @@
 import {Path} from "./utils/path.js"
 import {cli, color} from "@benev/argv"
 import {build_website} from "./build/website.js"
+import {WebsiteLoggers} from "./build/types/loggers.js"
 
 const program_name = color.green("🐢 @benev/turtle")
 
@@ -54,16 +55,30 @@ const {params} = cli<Args, Params>()({
 	},
 })
 
-function log(icon: string) {
-	return function(source: Path, target: Path) {
-		if (params.verbose) {
-			const from = color.cyan(source.relative)
-			const sep = color.blue("-->")
-			const to = color.magenta(target.relative)
-			console.log([color.blue(icon), from, sep, to].join(" "))
+const loggers: WebsiteLoggers = params.verbose
+	? (() => {
+
+		function log(icon: string) {
+			return (source: Path, target: Path) => {
+				const from = color.cyan(source.relative)
+				const sep = color.blue("-->")
+				const to = color.magenta(target.relative)
+				console.log([color.blue(icon), from, sep, to].join(" "))
+			}
 		}
-	}
-}
+
+		return {
+			on_file_copied: log("copied"),
+			on_file_written: log("rendered"),
+			on_turtle_script_executed(path) {
+				console.log([
+					color.blue("executed"),
+					color.cyan(path.relative),
+				].join(" "))
+			},
+		}
+	})()
+	: {}
 
 if (params.verbose)
 	console.log(program_name)
@@ -73,15 +88,6 @@ await build_website({
 	input_directories: params.in.split(":"),
 	output_directory: params.out,
 	excludes: params.excludes?.split(":") ?? [],
-	on_file_copied: log("copied"),
-	on_file_written: log("rendered"),
-	on_turtle_script_executed: path => {
-		if (params.verbose) {
-			console.log([
-				color.blue("executed"),
-				color.cyan(path.relative)
-			].join(" "))
-		}
-	},
+	...loggers,
 })
 

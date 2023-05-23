@@ -1,7 +1,7 @@
 
 import {find_files} from "../utils/find_files.js"
+import {WebsiteLoggers} from "./types/loggers.js"
 import {copy_all_files} from "./routines/copy_all_files.js"
-import {OutputLogger, TurtleScriptLogger} from "./types/loggers.js"
 import {build_all_webpages} from "./routines/build_all_webpages.js"
 import {run_all_turtle_scripts} from "./routines/run_all_turtle_scripts.js"
 
@@ -18,10 +18,7 @@ export async function build_website<xContext extends {}>({
 		excludes: string[]
 		output_directory: string
 		input_directories: string[]
-		on_file_copied?: OutputLogger
-		on_file_written?: OutputLogger
-		on_turtle_script_executed?: TurtleScriptLogger
-	}) {
+	} & WebsiteLoggers) {
 
 	const paths = {
 		turtle_scripts: await find_files(
