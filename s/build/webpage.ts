@@ -1,6 +1,7 @@
 
 import {Path} from "../utils/path.js"
 import {OutputLogger} from "./types/loggers.js"
+import {log_error} from "../utils/log_error.js"
 import {write_webpage} from "./parts/write_webpage.js"
 import {load_template_function} from "./parts/load_template_function.js"
 import {ascertain_html_destination_path} from "./parts/ascertain_html_destination_path.js"

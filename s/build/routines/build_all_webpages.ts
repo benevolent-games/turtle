@@ -2,6 +2,7 @@
 import {Path} from "../../utils/path.js"
 import {build_webpage} from "../webpage.js"
 import {OutputLogger} from "../types/loggers.js"
+import { log_error } from "../../utils/log_error.js"
 
 export async function build_all_webpages<xContext extends {}>(
 		paths: Path[],
@@ -12,12 +13,19 @@ export async function build_all_webpages<xContext extends {}>(
 
 	await Promise.all(
 		paths.map(
-			async path => build_webpage(
-				path,
-				output_directory,
-				context,
-				on_file_written,
-			)
+			async path => {
+				try {
+					await build_webpage(
+						path,
+						output_directory,
+						context,
+						on_file_written,
+					)
+				}
+				catch (error) {
+					log_error(error, "rendering", path.relative)
+				}
+			}
 		)
 	)
 }
