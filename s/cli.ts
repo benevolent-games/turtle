@@ -23,7 +23,8 @@ const {params} = cli<Args, Params>()({
 	readme: "https://github.com/benevolent-games/turtle#readme",
 	help: `
 		static site generator.
-		consumes .html.js template files.
+		renders .html.js template files into html.
+		executes .turtle.js script files.
 		copies all other files.
 	`.trim(),
 	tips: false,
