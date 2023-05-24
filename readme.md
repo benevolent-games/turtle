@@ -8,10 +8,13 @@
 - templates are just async functions, so you can do *anything*
 - you can kind of imagine it like some kind of static javascript "php"
 - turtle also copies other files like css and whatnot
+- turtle has proper typescript typings
 
 <br/>
 
 ## turtle turtorial
+
+note, turtle doesn't care whether you use typescript or plain javascript, but in the examples here i'll be using the two interchangeably.
 
 <br/>
 
@@ -28,7 +31,7 @@ npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --verbose="true"
 ### ask turtle for help
 
 ```sh
-npx @benev/turtle +help
+npx @benev/turtle --help
 ```
 
 ![image: turtle help page](https://i.imgur.com/zT8mtFO.png)
@@ -36,6 +39,8 @@ npx @benev/turtle +help
 <br/>
 
 ### write your first webpage template, like `index.html.js`
+
+turtle will sniff out your `.html.js` files, and render them into html pages.
 
 ```js
 import {webpage, html} from "@benev/turtle"
@@ -52,6 +57,79 @@ export default webpage(async({v}) => html`
     </body>
   </html>
 `)
+```
+
+<br/>
+
+### you can write template partials
+
+it can accept a context object
+
+you tell turtle to ignore it with `--exclude="**/*.partial.html.js"`
+
+`page.partial.html.ts`
+
+```ts
+import {webpage, html} from "@benev/turtle"
+
+export default webpage<{x: number}>(async({v}, {x}) => html`
+
+	<!doctype html>
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<title>@benev/turtle - stamp test</title>
+			<link rel="stylesheet" href="${v("/style.css")}"/>
+		</head>
+		<body>
+			<h1>@benev/turtle - stamp test</h1>
+			<p>${x}</p>
+		</body>
+	</html>
+
+`)
+```
+
+<br/>
+
+### write your first turtle script, like `stamp.turtle.js`
+
+turtle also sniffs out `.turtle.js` scripts and executes them.
+
+in these, you can do anything you want. your turtle script function is provided some handy stuff like the `write_webpage` function.
+
+`stamp.turtle.ts`
+
+```ts
+import {turtle_script} from "@benev/turtle"
+
+// import the partial from the previous example
+import page from "./page.partial.html.js"
+
+// we'll stamp out a webpage for each of these values
+const values = [1, 2]
+
+// your default export must be a turtle_script
+export default turtle_script(async({write_webpage}) => {
+
+	// loop over each value
+	await Promise.all(values.map(async(x) => {
+
+		// write a webpage
+		await write_webpage({
+
+			// provide the page template
+			template: page,
+
+			// provide the x value in the context
+			context: {x},
+
+			// specify the destination relative
+			// to this build script
+			destination: `${x}.html`,
+		})
+	}))
+})
 ```
 
 <br/>
