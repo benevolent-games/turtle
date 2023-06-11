@@ -1,6 +1,6 @@
 {
 	"name": "@benev/turtle",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "static site generator",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
