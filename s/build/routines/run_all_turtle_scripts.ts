@@ -4,6 +4,7 @@ import {log_error} from "../../utils/log_error.js"
 import {ScriptMeta} from "../types/script_meta.js"
 import {write_webpage} from "../parts/write_webpage.js"
 import {OutputLogger, TurtleScriptLogger} from "../types/loggers.js"
+import { dirname } from "path"
 
 export async function run_all_turtle_scripts(
 		paths: Path[],
@@ -33,8 +34,10 @@ export async function run_all_turtle_scripts(
 	async function execute_script(path: Path) {
 		try {
 			const script = await import(path.absolute)
+			const script_directory = dirname(path.partial)
 			const meta: ScriptMeta = {
 				path,
+				script_directory,
 				on_file_written,
 				output_directory,
 				write_webpage: handy_write_webpage(path),

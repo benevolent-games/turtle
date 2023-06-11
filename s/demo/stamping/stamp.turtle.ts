@@ -23,7 +23,7 @@ export default turtle_script(async({write_webpage}) => {
 
 			// specify the destination relative
 			// to this build script
-			destination: `${x}.html`,
+			destination: `lol/${x}.html`,
 		})
 	}))
 })

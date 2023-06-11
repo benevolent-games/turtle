@@ -5,6 +5,7 @@ import {WebpageMaker} from "../../html/webpage.js"
 
 export type ScriptMeta = {
 	path: Path
+	script_directory: string
 	output_directory: string
 	on_file_written: OutputLogger
 	write_webpage: <xContext extends {}>({}: {
