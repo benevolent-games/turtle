@@ -28,6 +28,7 @@ export async function write_webpage<xContext extends {}>({
 	const template_path = path.relative
 
 	const basics = make_template_basics({
+		destination,
 		template_path,
 		output_directory,
 		input_directory: path.directory,

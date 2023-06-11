@@ -4,16 +4,18 @@ import {TemplateBasics} from "../types/template_basics.js"
 import {make_hash_versioner} from "../../utils/hash_versioner.js"
 
 export function make_template_basics({
+		destination,
 		template_path,
 		input_directory,
 		output_directory,
 	}: {
+		destination: string
 		template_path: string
 		input_directory: string
 		output_directory: string
 	}): TemplateBasics {
 
-	let base = relative(dirname(template_path), input_directory)
+	let base = relative(dirname(destination), "")
 
 	base = base === ""
 		? "."
