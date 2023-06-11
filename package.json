@@ -18,7 +18,7 @@
 		"permissions": "chmod +x x/cli.js",
 		"start": "http-server x/demo",
 		"watch": "tsc -w",
-		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo --excludes **/*.partial.html.js +verbose",
+		"demo": "node x/cli.js --in s/demo:x/demo --out x/demo --exclude **/*.partial.html.js +verbose",
 		"help": "node x/cli.js +help",
 		"test": "cynic node x/tests.test.js"
 	},

@@ -12,7 +12,7 @@ export type Args = {}
 export type Params = {
 	in: string
 	out: string
-	excludes: string
+	exclude: string
 	verbose: boolean
 }
 
@@ -42,7 +42,7 @@ const {params} = cli<Args, Params>()({
 			mode: "requirement",
 			help: "target directory to generate the website into",
 		},
-		excludes: {
+		exclude: {
 			type: String,
 			mode: "option",
 			help: "files to ignore (glob patterns, separated by colons)",
@@ -88,7 +88,7 @@ await build_website({
 	context: {},
 	input_directories: params.in.split(":"),
 	output_directory: params.out,
-	excludes: params.excludes?.split(":") ?? [],
+	exclude: params.exclude?.split(":") ?? [],
 	...loggers,
 })
 

@@ -7,7 +7,7 @@ import {run_all_turtle_scripts} from "./routines/run_all_turtle_scripts.js"
 
 export async function build_website<xContext extends {}>({
 		context,
-		excludes,
+		exclude,
 		output_directory,
 		input_directories,
 		on_file_copied = () => {},
@@ -15,7 +15,7 @@ export async function build_website<xContext extends {}>({
 		on_turtle_script_executed = () => {},
 	}: {
 		context: xContext
-		excludes: string[]
+		exclude: string[]
 		output_directory: string
 		input_directories: string[]
 	} & WebsiteLoggers) {
@@ -23,17 +23,17 @@ export async function build_website<xContext extends {}>({
 	const paths = {
 		turtle_scripts: await find_files(
 			input_directories,
-			excludes,
+			exclude,
 			"**/*.turtle.js",
 		),
 		copyables: await find_files(
 			input_directories,
-			[...excludes, "**/*.{ts,html.js,turtle.js}"],
+			[...exclude, "**/*.{ts,html.js,turtle.js}"],
 			"**/*",
 		),
 		templates: await find_files(
 			input_directories,
-			excludes,
+			exclude,
 			"**/*.html.js",
 		),
 	}
