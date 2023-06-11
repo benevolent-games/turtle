@@ -146,3 +146,9 @@ export default turtle_script(async({write_webpage}) => {
 - so you can import other modules, read and write files, whatever you want
 - thanks to top-level await, you could have a module read yaml files or whatever, and then templates can import that data
 
+<br/>
+
+### be sure to escape globs
+
+- if you provide a glob to a flag like `--exclude="partials/**/*"` -- be sure to use double quotes so that your shell doesn't expand the glob -- the double quotes tells your shell to pass the literal glob to turtle, which will then process the glob properly (if you let the shell expand the glob, it won't work)
+
