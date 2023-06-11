@@ -1,10 +1,11 @@
 
+import {dirname} from "path"
+
 import {Path} from "../../utils/path.js"
 import {log_error} from "../../utils/log_error.js"
 import {ScriptMeta} from "../types/script_meta.js"
 import {write_webpage} from "../parts/write_webpage.js"
 import {OutputLogger, TurtleScriptLogger} from "../types/loggers.js"
-import { dirname } from "path"
 
 export async function run_all_turtle_scripts(
 		paths: Path[],
