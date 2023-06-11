@@ -18,22 +18,31 @@ export function log_error(error: any, activity?: string, path?: string) {
 function error_message(error: Error, activity?: string, path?: string) {
 	const lines = []
 
-	lines.push(color.red(error.name))
+	lines.push(color.red(error.name) + " " + color.yellow(error.message))
 
 	{
 		let origin = ""
 
 		if (activity)
-			origin += color.blue(activity) + " "
+			origin += color.magenta("while " + activity) + " "
 
 		if (path)
-			origin += color.magenta(path)
+			origin += color.cyan(path)
 
 		if (origin.length)
 			lines.push(indent("  ", 1, origin))
 	}
 
-	lines.push(indent("  ", 1, color.yellow(error.message)))
+	if (error.stack)
+		lines.push(
+			...error.stack
+				.split("\n")
+				.slice(1)
+				.map(line => line.trim())
+				.map(line => color.red(line))
+				.map(line => indent("  ", 1, line.trim()))
+		)
+
 	return lines.join("\n")
 }
 
