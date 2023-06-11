@@ -34,7 +34,7 @@ npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --verbose="true"
 npx @benev/turtle --help
 ```
 
-![image: turtle help page](https://i.imgur.com/zT8mtFO.png)
+![image: turtle help page](https://i.imgur.com/Zpf4Iqk.png)
 
 <br/>
 
