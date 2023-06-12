@@ -7,7 +7,7 @@ import {untab} from "./html/untab.js"
 import {render} from "./html/render.js"
 import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
-import {make_hash_versioner} from "./utils/hash_versioner.js"
+import { apply_file_hash_to_url } from "./utils/hashing/apply_file_hash_to_url.js"
 
 export default <Suite>{
 	"ergonomics": {
@@ -98,18 +98,18 @@ export default <Suite>{
 	},
 	"versioning": {
 		async "adds file hash to url"() {
-			const v = make_hash_versioner({root: "x"})
 			const url = "index.js"
-			const result = await v(url)
+			const filepath = "x/index.js"
+			const result = await apply_file_hash_to_url({url, filepath})
 			assert(
 				/(\S+)\?v=\S{8,64}/.test(result),
 				"url is versioned with hash",
 			)
 		},
 		async "adds file hash to url that already has a querystring"() {
-			const v = make_hash_versioner({root: "x"})
 			const url = "index.js?lol=rofl"
-			const result = await v(url)
+			const filepath = "x/index.js"
+			const result = await apply_file_hash_to_url({url, filepath})
 			assert(
 				/(\S+)\?lol=rofl&v=\S{8,64}/.test(result),
 				"url is versioned with hash",
