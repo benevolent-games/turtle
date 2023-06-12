@@ -8,6 +8,8 @@ import {render} from "./html/render.js"
 import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
 import {apply_file_hash_to_url} from "./utils/hashing/apply_file_hash_to_url.js"
+import { PathRouter } from "./build/parts/path/path_router.js"
+import { PathDiscovery } from "./build/parts/path/subparts/path_discovery.js"
 
 export default <Suite>{
 
@@ -164,6 +166,48 @@ export default <Suite>{
 			const value = "script"
 			const result = html`${unsanitized(value)}`
 			expect(result.toString()).equals(value)
+		},
+	},
+
+	"path routing": {
+		async "root can traverse up one level (../)"() {
+			const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+			const path = PathRouter.make_path_routing_function({
+				destination: "lol/2.html",
+				source_template_path: {
+					directory: "x/demo",
+					relative: "x/demo/stamping/stamp.turtle.js",
+					absolute: "/home/chase/work/@benev/turtle/x/demo/stamping/stamp.turtle.js",
+					partial: "stamping/stamp.turtle.js",
+				},
+			})
+			expect(path(url).root("style.css")).equals("../style.css")
+		},
+		async "local can find its way back to module's directory"() {
+			const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+			const path = PathRouter.make_path_routing_function({
+				destination: "lol/2.html",
+				source_template_path: {
+					directory: "x/demo",
+					relative: "x/demo/stamping/stamp.turtle.js",
+					absolute: "/home/chase/work/@benev/turtle/x/demo/stamping/stamp.turtle.js",
+					partial: "stamping/stamp.turtle.js",
+				},
+			})
+			expect(path(url).local("style.css")).equals("../stamping/style.css")
+		},
+		async "dest just returns the same path"() {
+			const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+			const path = PathRouter.make_path_routing_function({
+				destination: "lol/2.html",
+				source_template_path: {
+					directory: "x/demo",
+					relative: "x/demo/stamping/stamp.turtle.js",
+					absolute: "/home/chase/work/@benev/turtle/x/demo/stamping/stamp.turtle.js",
+					partial: "stamping/stamp.turtle.js",
+				},
+			})
+			expect(path(url).dest("style.css")).equals("style.css")
 		},
 	},
 }
