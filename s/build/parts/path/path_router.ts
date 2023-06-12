@@ -8,7 +8,7 @@ import {PathDiscovery} from "./subparts/path_discovery.js"
 export type PathRoutingFunction = (template_meta_url: string) => PathRouter
 
 export class PathRouter {
-	#router: PathDiscovery
+	#discovery: PathDiscovery
 	readonly version: PathVersioner
 
 	static make_path_routing_function({destination, source_template_path}: {
@@ -29,21 +29,21 @@ export class PathRouter {
 		)
 	}
 
-	constructor(router: PathDiscovery) {
-		this.#router = router
-		this.version = new PathVersioner(router)
+	constructor(discovery: PathDiscovery) {
+		this.#discovery = discovery
+		this.version = new PathVersioner(discovery)
 	}
 
 	root(link: string) {
-		return this.#router.root(link).url
+		return this.#discovery.root(link).url
 	}
 
 	local(link: string) {
-		return this.#router.local(link).url
+		return this.#discovery.local(link).url
 	}
 
 	dest(link: string) {
-		return this.#router.dest(link).url
+		return this.#discovery.dest(link).url
 	}
 }
 
