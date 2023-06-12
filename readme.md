@@ -18,7 +18,7 @@ note, turtle doesn't care whether you use typescript or plain javascript, but in
 
 <br/>
 
-### run turtle to generate a website
+### generate a website with turtle's cli
 
 ```sh
 npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --exclude="**/*.partial.html.js" --verbose="true"
@@ -43,7 +43,7 @@ npx @benev/turtle --help
 turtle will sniff out your `.html.js` files, and render them into html pages.
 
 ```js
-import {webpage, html} from "@benev/turtle"
+import {template, html} from "@benev/turtle"
 const {url} = import.meta.url
 
 export default template(async({path}) => html`
@@ -71,10 +71,10 @@ you tell turtle to ignore it with `--exclude="**/*.partial.html.js"`
 `page.partial.html.ts`
 
 ```ts
-import {webpage, html} from "@benev/turtle"
+import {template, html} from "@benev/turtle"
 const {url} = import.meta
 
-export default webpage(async({path}, x: number) => html`
+export default template(async({path}, x: number) => html`
 	<!doctype html>
 	<html>
 		<head>
@@ -134,11 +134,52 @@ export default turtle_script(async({write_webpage}) => {
 
 <br/>
 
-### you've gotta get into *file path versioning!*
+### you've gotta get into *file path hash versioning!*
 - that's what the above example is doing with that `path` function
 - if you use `.version` then it will attach the file's hash as a suffix
 - so `/style.css` becomes `/style.css?v=c252882f`
 - now when you deploy your site, your users won't see old cached css files that break your website -- now the browser cache becomes *version aware!* 🤯
+
+<br/>
+
+### use `path` in your templates
+
+turtle gives you a `path` utility that allows you to link to file from different reference points. it can also do *file path hash versioning* for you.
+
+to understand it, consider a hypothetical file structure like this:
+
+```
+s/ <-- (source directory)
+  favicon.png
+  cool/
+    awesome.html.ts <-- (your turtle template)
+    style.css
+```
+also, we'll assume you've set `const {url} = import.meta`
+
+- `path(url).root("favicon.png")`  
+  use *root* to reference files relative to the website root.  
+  result: `../favicon.png`
+
+- `path(url).local("style.css")`  
+  use *local* to reference files relative to the current template module.  
+  result: `style.css`
+
+- `path(url).dest("rofl.jpg")`
+  use *dest* for special cases, to reference files relative to the *destination html file* that it output.  
+  this is for custom turtle script builds, where the destination html file output will be written into a different directory structure than the location of the current template module.  
+
+okay, this might make more sense when you consider file path versioning.
+
+simply add `.version` to the above commands, and turtle will attach a hash query param suffix, which will magically fix all your browser caching problems:
+
+- `path(url).version.root("favicon.png")`  
+  result: `../favicon.png?v=f6dd3bc1`
+
+- `path(url).version.local("style.css")`  
+  result: `style.css?v=ce5f3acd`
+
+- `path(url).version.dest("rofl.jpg")`  
 
 <br/>
 
