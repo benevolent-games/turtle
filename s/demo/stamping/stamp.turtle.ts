@@ -1,7 +1,7 @@
 
 import {turtle_script} from "../../build/turtle_script.js"
 
-import page from "./page.partial.html.js"
+import page from "./stamp.partial.html.js"
 
 // we'll stamp out a webpage for each of these values
 const values = [1, 2]

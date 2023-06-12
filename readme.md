@@ -21,7 +21,7 @@ note, turtle doesn't care whether you use typescript or plain javascript, but in
 ### run turtle to generate a website
 
 ```sh
-npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --verbose="true"
+npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --exclude="**/*.partial.html.js" --verbose="true"
 ```
 
 ![image: turtle example output](https://i.imgur.com/IpAi0rF.png)
@@ -44,13 +44,14 @@ turtle will sniff out your `.html.js` files, and render them into html pages.
 
 ```js
 import {webpage, html} from "@benev/turtle"
+const {url} = import.meta.url
 
-export default webpage(async({v}) => html`
+export default template(async({path}) => html`
   <!doctype html>
   <html>
     <head>
       <title>@benev/turtle</title>
-      <link rel="stylesheet" href="${v("/style.css")}"/>
+      <link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
     </head>
     <body>
       <h1>@benev/turtle</h1>
@@ -71,22 +72,21 @@ you tell turtle to ignore it with `--exclude="**/*.partial.html.js"`
 
 ```ts
 import {webpage, html} from "@benev/turtle"
+const {url} = import.meta
 
-export default webpage<{x: number}>(async({v}, {x}) => html`
-
+export default webpage(async({path}, x: number) => html`
 	<!doctype html>
 	<html>
 		<head>
 			<meta charset="utf-8"/>
 			<title>@benev/turtle - stamp test</title>
-			<link rel="stylesheet" href="${v("/style.css")}"/>
+			<link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
 		</head>
 		<body>
 			<h1>@benev/turtle - stamp test</h1>
 			<p>${x}</p>
 		</body>
 	</html>
-
 `)
 ```
 
@@ -122,7 +122,7 @@ export default turtle_script(async({write_webpage}) => {
 			template: page,
 
 			// provide the x value in the context
-			context: {x},
+			context: x,
 
 			// specify the destination relative
 			// to this build script
@@ -134,9 +134,9 @@ export default turtle_script(async({write_webpage}) => {
 
 <br/>
 
-### you've gotta get into *hash versioning!*
-- that's what the above example is doing with that `v` function
-- you use `v` on your urls, and `v` will attach that file's hash as a suffix
+### you've gotta get into *file path versioning!*
+- that's what the above example is doing with that `path` function
+- if you use `.version` then it will attach the file's hash as a suffix
 - so `/style.css` becomes `/style.css?v=c252882f`
 - now when you deploy your site, your users won't see old cached css files that break your website -- now the browser cache becomes *version aware!* 🤯
 

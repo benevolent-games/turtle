@@ -1,8 +1,7 @@
 
-import {HashVersioner} from "../../utils/hash_versioner.js"
+import {PathRoutingFunction} from "../parts/path/path_router.js"
 
 export interface TemplateBasics {
-	base: string
-	v: HashVersioner
+	path: PathRoutingFunction
 }
 

@@ -15,7 +15,6 @@ export * from "./html/html.js"
 export * from "./html/render.js"
 export * from "./html/unsanitized.js"
 export * from "./html/untab.js"
-export * from "./html/webpage.js"
 
 export * from "./utils/escape_html.js"
 export * from "./utils/escape_regex.js"

@@ -3,13 +3,14 @@ import {join, resolve} from "path"
 
 import {Path} from "../../utils/path.js"
 import {untab} from "../../html/untab.js"
+import {WebTemplate} from "../template.js"
 import {debase_path} from "./debase_path.js"
+import {PathRouter} from "./path/path_router.js"
 import {OutputLogger} from "../types/loggers.js"
-import {WebpageMaker} from "../../html/webpage.js"
 import {write_file} from "../../utils/write_file.js"
-import {make_template_basics} from "./make_template_basics.js"
+import {TemplateBasics} from "../types/template_basics.js"
 
-export async function write_webpage<xContext extends {}>({
+export async function write_webpage<C>({
 		path,
 		context,
 		destination,
@@ -18,21 +19,20 @@ export async function write_webpage<xContext extends {}>({
 		on_file_written,
 	}: {
 		path: Path
-		context: xContext
+		context: C
 		destination: string
+		template: WebTemplate<C>
 		output_directory: string
-		template: WebpageMaker<xContext>
 		on_file_written: OutputLogger
 	}) {
 
 	const template_path = path.relative
-
-	const basics = make_template_basics({
-		destination,
-		template_path,
-		output_directory,
-		input_directory: path.directory,
-	})
+	const basics: TemplateBasics = {
+		path: PathRouter.make_path_routing_function({
+			destination,
+			source_template_path: path,
+		}),
+	}
 
 	const template_function = await template(basics, context)
 	const result_html = await template_function.render()
