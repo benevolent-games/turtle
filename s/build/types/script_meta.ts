@@ -1,7 +1,7 @@
 
 import {Path} from "../../utils/path.js"
 import {OutputLogger} from "./loggers.js"
-import {WebTemplate} from "../template.js"
+import {Template} from "../template.js"
 
 export type ScriptMeta = {
 	path: Path
@@ -11,7 +11,7 @@ export type ScriptMeta = {
 	write_webpage: <C>({}: {
 		context: C
 		destination: string
-		template: WebTemplate<C>
+		template: Template<C>
 	}) => Promise<void>
 }
 

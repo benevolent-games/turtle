@@ -1,9 +1,9 @@
 
 import {join, resolve} from "path"
 
+import {Template} from "../template.js"
 import {Path} from "../../utils/path.js"
 import {untab} from "../../html/untab.js"
-import {WebTemplate} from "../template.js"
 import {debase_path} from "./debase_path.js"
 import {PathRouter} from "./path/path_router.js"
 import {OutputLogger} from "../types/loggers.js"
@@ -21,7 +21,7 @@ export async function write_webpage<C>({
 		path: Path
 		context: C
 		destination: string
-		template: WebTemplate<C>
+		template: Template<C>
 		output_directory: string
 		on_file_written: OutputLogger
 	}) {

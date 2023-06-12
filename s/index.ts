@@ -1,7 +1,8 @@
 
-export * from "./build/turtle_script.js"
-export * from "./build/build_website.js"
 export * from "./build/build_webpage.js"
+export * from "./build/build_website.js"
+export * from "./build/template.js"
+export * from "./build/turtle_script.js"
 
 export * from "./build/types/loggers.js"
 export * from "./build/types/script_meta.js"

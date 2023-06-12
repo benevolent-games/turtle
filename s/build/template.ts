@@ -1,13 +1,13 @@
 
-import {Html} from "../html/template"
+import {Html} from "../html/template.js"
 import {TemplateBasics} from "./types/template_basics.js"
 
-export type WebTemplate<C> = (
+export type Template<C> = (
 	basics: TemplateBasics,
 	context: C,
 ) => Promise<Html>
 
-export function template<C>(t: WebTemplate<C>) {
+export function template<C>(t: Template<C>) {
 	return t
 }
 
