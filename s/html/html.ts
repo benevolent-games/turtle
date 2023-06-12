@@ -1,11 +1,11 @@
 
-import {HtmlTemplate} from "./template.js"
+import {Html} from "./template.js"
 
 export function html(
 		strings: TemplateStringsArray,
 		...values: any[]
-	): HtmlTemplate {
+	): Html {
 
-	return new HtmlTemplate({strings, values})
+	return new Html({strings, values})
 }
 

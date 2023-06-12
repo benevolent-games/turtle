@@ -1,7 +1,7 @@
 
-import {HtmlTemplate} from "./template.js"
+import {Html} from "./template.js"
 
 export function unsanitized(value: string) {
-	return new HtmlTemplate({strings: [value], values: []})
+	return new Html({strings: [value], values: []})
 }
 

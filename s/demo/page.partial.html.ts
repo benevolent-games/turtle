@@ -1,11 +1,11 @@
 
 import {html} from "../html/html.js"
-import {HtmlTemplate} from "../html/template.js"
+import {Html} from "../html/template.js"
 import {template} from "../build/template.js"
 
 const {url} = import.meta
 
-export default template(async({path}, content: HtmlTemplate) => html`
+export default template(async({path}, content: Html) => html`
 	<!doctype html>
 	<html>
 		<head>

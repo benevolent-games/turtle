@@ -5,7 +5,7 @@ import {nap} from "./utils/nap.js"
 import {html} from "./html/html.js"
 import {untab} from "./html/untab.js"
 import {render} from "./html/render.js"
-import {HtmlTemplate} from "./html/template.js"
+import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
 import {make_hash_versioner} from "./utils/hash_versioner.js"
 
@@ -47,7 +47,7 @@ export default <Suite>{
 		},
 	},
 	"sanitization": async() => {
-		const isSanitized = (t: HtmlTemplate) => !render(t).includes("<script>")
+		const isSanitized = (t: Html) => !render(t).includes("<script>")
 		return {
 			async "template itself is not sanitized"() {
 				expect(!isSanitized(html`<script></script>`)).ok()
