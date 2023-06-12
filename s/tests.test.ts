@@ -7,9 +7,10 @@ import {untab} from "./html/untab.js"
 import {render} from "./html/render.js"
 import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
-import { apply_file_hash_to_url } from "./utils/hashing/apply_file_hash_to_url.js"
+import {apply_file_hash_to_url} from "./utils/hashing/apply_file_hash_to_url.js"
 
 export default <Suite>{
+
 	"ergonomics": {
 		async "null and undefined injections do nothing"() {
 			const expectedResult = "hello world"
@@ -18,6 +19,7 @@ export default <Suite>{
 			expect(html`hello${""} world`.toString()).equals(expectedResult)
 		},
 	},
+
 	"async": {
 		async "injected promises are resolved"() {
 			const expectedResult = "hello world!"
@@ -46,6 +48,7 @@ export default <Suite>{
 				.equals("hello world!")
 		},
 	},
+
 	"sanitization": async() => {
 		const isSanitized = (t: Html) => !render(t).includes("<script>")
 		return {
@@ -72,6 +75,7 @@ export default <Suite>{
 			},
 		}
 	},
+
 	"nesting": {
 		"nested html functions must not be sanitized": async () => {
 			const input = html`${html`<div></div>`}`
@@ -89,6 +93,7 @@ export default <Suite>{
 			assert(render(input) === output, "nested injected values are not sanitized")
 		}
 	},
+
 	"arrays": {
 		async "arrays of values are joined together cleanly"() {
 			const items = ["alpha", "bravo"]
@@ -96,6 +101,7 @@ export default <Suite>{
 			assert(output === "alphabravo", "arrays should be cleanly joined")
 		},
 	},
+
 	"versioning": {
 		async "adds file hash to url"() {
 			const url = "index.js"
@@ -116,6 +122,7 @@ export default <Suite>{
 			)
 		},
 	},
+
 	"untab": {
 		async "handles string without any tabbing"() {
 			expect(untab("lol")).equals("lol")
@@ -151,6 +158,7 @@ export default <Suite>{
 			).equals("\nlol\n\n\trofl\n\n\t\tkek\nlmao\n")
 		},
 	},
+
 	"unsanitized": {
 		async "unsanitized values are not sanitized"() {
 			const value = "script"
