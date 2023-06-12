@@ -7,6 +7,7 @@ import {untab} from "./html/untab.js"
 import {render} from "./html/render.js"
 import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
+import {PathRouter} from "./build/parts/path/path_router.js"
 import {apply_file_hash_to_url} from "./utils/hashing/apply_file_hash_to_url.js"
 
 export default <Suite>{
@@ -165,6 +166,38 @@ export default <Suite>{
 			const result = html`${unsanitized(value)}`
 			expect(result.toString()).equals(value)
 		},
+	},
+
+	"path routing": async() => {
+		const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+		const path = PathRouter.make_path_routing_function({
+			destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
+			web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
+		})
+
+		return {
+			async "root can traverse up one level (../)"() {
+				expect(path(url).root("style.css")).equals("../style.css")
+			},
+
+			async "local can find its way back to module's directory"() {
+				const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+				const path = PathRouter.make_path_routing_function({
+					destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
+					web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
+				})
+				expect(path(url).local("style.css")).equals("../stamping/style.css")
+			},
+
+			async "dest just returns the same path"() {
+				const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
+				const path = PathRouter.make_path_routing_function({
+					destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
+					web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
+				})
+				expect(path(url).dest("style.css")).equals("style.css")
+			},
+		}
 	},
 }
 
