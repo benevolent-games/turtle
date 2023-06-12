@@ -1,9 +1,6 @@
 
-import {relative, resolve} from "path/posix"
-
-import {Path} from "../../../utils/path.js"
 import {PathVersioner} from "./subparts/path_versioner.js"
-import {PathDiscovery} from "./subparts/path_discovery.js"
+import {PathConcepts, PathDiscovery} from "./subparts/path_discovery.js"
 
 export type PathRoutingFunction = (template_meta_url: string) => PathRouter
 
@@ -11,20 +8,16 @@ export class PathRouter {
 	#discovery: PathDiscovery
 	readonly version: PathVersioner
 
-	static make_path_routing_function({destination, source_template_path}: {
-			destination: string
-			source_template_path: Path
-		}): PathRoutingFunction {
+	static make_path_routing_function({
+			destination_path,
+			web_root_that_contains_template_module,
+		}: Omit<PathConcepts, "template_path">): PathRoutingFunction {
 
 		return (template_meta_url: string) => new PathRouter(
 			new PathDiscovery({
-				template_meta_url,
-				destination,
-				directory: resolve(source_template_path.directory),
-				base: relative(
-					template_meta_url.slice("file://".length),
-					resolve(source_template_path.directory),
-				),
+				destination_path,
+				web_root_that_contains_template_module,
+				template_path: template_meta_url.slice("file://".length),
 			})
 		)
 	}

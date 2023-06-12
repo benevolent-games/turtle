@@ -27,16 +27,6 @@ export async function write_webpage<C>({
 	}) {
 
 	const template_path = path.relative
-	const basics: TemplateBasics = {
-		path: PathRouter.make_path_routing_function({
-			destination,
-			source_template_path: path,
-		}),
-	}
-
-	const template_function = await template(basics, context)
-	const result_html = await template_function.render()
-	const final_html = untab(result_html).trim()
 
 	const partial = debase_path(output_directory, destination)
 	const final_destination: Path = {
@@ -45,6 +35,17 @@ export async function write_webpage<C>({
 		absolute: resolve(template_path),
 		partial,
 	}
+
+	const basics: TemplateBasics = {
+		path: PathRouter.make_path_routing_function({
+			destination_path: final_destination.absolute,
+			web_root_that_contains_template_module: resolve(path.directory),
+		}),
+	}
+
+	const template_function = await template(basics, context)
+	const result_html = await template_function.render()
+	const final_html = untab(result_html).trim()
 
 	await write_file(final_destination.relative, final_html)
 	on_file_written(path, final_destination)
