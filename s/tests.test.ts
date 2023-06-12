@@ -5,11 +5,12 @@ import {nap} from "./utils/nap.js"
 import {html} from "./html/html.js"
 import {untab} from "./html/untab.js"
 import {render} from "./html/render.js"
-import {HtmlTemplate} from "./html/template.js"
+import {Html} from "./html/template.js"
 import {unsanitized} from "./html/unsanitized.js"
-import {make_hash_versioner} from "./utils/hash_versioner.js"
+import {apply_file_hash_to_url} from "./utils/hashing/apply_file_hash_to_url.js"
 
 export default <Suite>{
+
 	"ergonomics": {
 		async "null and undefined injections do nothing"() {
 			const expectedResult = "hello world"
@@ -18,6 +19,7 @@ export default <Suite>{
 			expect(html`hello${""} world`.toString()).equals(expectedResult)
 		},
 	},
+
 	"async": {
 		async "injected promises are resolved"() {
 			const expectedResult = "hello world!"
@@ -46,8 +48,9 @@ export default <Suite>{
 				.equals("hello world!")
 		},
 	},
+
 	"sanitization": async() => {
-		const isSanitized = (t: HtmlTemplate) => !render(t).includes("<script>")
+		const isSanitized = (t: Html) => !render(t).includes("<script>")
 		return {
 			async "template itself is not sanitized"() {
 				expect(!isSanitized(html`<script></script>`)).ok()
@@ -72,6 +75,7 @@ export default <Suite>{
 			},
 		}
 	},
+
 	"nesting": {
 		"nested html functions must not be sanitized": async () => {
 			const input = html`${html`<div></div>`}`
@@ -89,6 +93,7 @@ export default <Suite>{
 			assert(render(input) === output, "nested injected values are not sanitized")
 		}
 	},
+
 	"arrays": {
 		async "arrays of values are joined together cleanly"() {
 			const items = ["alpha", "bravo"]
@@ -96,26 +101,28 @@ export default <Suite>{
 			assert(output === "alphabravo", "arrays should be cleanly joined")
 		},
 	},
+
 	"versioning": {
 		async "adds file hash to url"() {
-			const v = make_hash_versioner({root: "x"})
 			const url = "index.js"
-			const result = await v(url)
+			const filepath = "x/index.js"
+			const result = await apply_file_hash_to_url({url, filepath})
 			assert(
 				/(\S+)\?v=\S{8,64}/.test(result),
 				"url is versioned with hash",
 			)
 		},
 		async "adds file hash to url that already has a querystring"() {
-			const v = make_hash_versioner({root: "x"})
 			const url = "index.js?lol=rofl"
-			const result = await v(url)
+			const filepath = "x/index.js"
+			const result = await apply_file_hash_to_url({url, filepath})
 			assert(
 				/(\S+)\?lol=rofl&v=\S{8,64}/.test(result),
 				"url is versioned with hash",
 			)
 		},
 	},
+
 	"untab": {
 		async "handles string without any tabbing"() {
 			expect(untab("lol")).equals("lol")
@@ -151,6 +158,7 @@ export default <Suite>{
 			).equals("\nlol\n\n\trofl\n\n\t\tkek\nlmao\n")
 		},
 	},
+
 	"unsanitized": {
 		async "unsanitized values are not sanitized"() {
 			const value = "script"

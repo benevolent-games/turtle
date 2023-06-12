@@ -1,22 +1,11 @@
 
-import {webpage, html} from "../index.js"
+import {html} from "../html/html.js"
+import {template} from "../build/template.js"
 import {description, random_value} from "./data.js"
+import pagePartialHtml from "./page.partial.html.js"
 
-export default webpage(async({v}) => html`
-
-	<!doctype html>
-	<html>
-		<head>
-			<meta charset="utf-8"/>
-			<title>@benev/turtle</title>
-			<link rel="stylesheet" href="${v("/style.css")}"/>
-		</head>
-		<body>
-			<h1>@benev/turtle</h1>
-			<p>${description}</p>
-			<p>${random_value}</p>
-		</body>
-	</html>
-
-`)
+export default template(async basics => pagePartialHtml(basics, html`
+	<p>${description}</p>
+	<p>${random_value}</p>
+`))
 

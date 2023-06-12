@@ -1,7 +1,7 @@
 
-import {HtmlTemplate} from "./template.js"
+import {Html} from "./template.js"
 
-export function render(template: HtmlTemplate) {
+export function render(template: Html) {
 	return template.toString()
 }
 

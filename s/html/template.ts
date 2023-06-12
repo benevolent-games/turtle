@@ -1,28 +1,28 @@
 
 import {escape_html} from "../utils/escape_html.js"
 
-export type HtmlTemplateOptions = {
+export type HtmlOptions = {
 	strings: TemplateStringsArray | string[]
 	values: any[]
 }
 
-export class HtmlTemplate {
+export class Html {
 	#strings: string[]
 	#values: any[]
 
-	constructor({strings, values}: HtmlTemplateOptions) {
+	constructor({strings, values}: HtmlOptions) {
 		this.#strings = [...strings]
 		this.#values = values
 	}
 
 	#process_value(value: any): string {
-		return value instanceof HtmlTemplate
+		return value instanceof Html
 			? value.toString()
 			: escape_html(value.toString())
 	}
 
 	async #process_async_value(value: any): Promise<string> {
-		return value instanceof HtmlTemplate
+		return value instanceof Html
 			? await value.render()
 			: escape_html(value.toString())
 	}
