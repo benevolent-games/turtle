@@ -1,6 +1,10 @@
 
 # turtle changelog
 
+### v0.3.1
+
+- export 'PathRouter' from "@benev/turtle"
+
 ### v0.3.0 (2023-06-11)
 
 - ! rename `HtmlTemplate` to `Html`
