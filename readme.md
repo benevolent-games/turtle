@@ -44,7 +44,7 @@ turtle will sniff out your `.html.js` files, and render them into html pages.
 
 ```js
 import {template, html} from "@benev/turtle"
-const {url} = import.meta.url
+const {url} = import.meta
 
 export default template(async({path}) => html`
   <!doctype html>
