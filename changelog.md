@@ -1,7 +1,7 @@
 
 # turtle changelog
 
-### v0.3.1
+### v0.3.1 (2023-06-13)
 
 - export 'PathRouter' from "@benev/turtle"
 
