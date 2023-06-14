@@ -11,5 +11,5 @@ ln -s $(realpath $s) $x/$s
 ln -s $(realpath node_modules) $x/node_modules
 
 tsc
-"$(dirname $0)/bundle" $x/$main
+"$(dirname $0)/turtle-bundle" $x/$main
 

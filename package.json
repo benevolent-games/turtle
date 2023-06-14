@@ -8,9 +8,9 @@
 	"main": "x/index.js",
 	"bin": {
 		"turtle": "x/cli.js",
-		"turtle-install": "scripts/install",
-		"turtle-build": "scripts/build",
-		"turtle-bundle": "scripts/bundle"
+		"turtle-install": "scripts/turtle-install",
+		"turtle-build": "scripts/turtle-build",
+		"turtle-bundle": "scripts/turtle-bundle"
 	},
 	"files": [
 		"x",
