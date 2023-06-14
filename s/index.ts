@@ -18,6 +18,9 @@ export * from "./html/render.js"
 export * from "./html/unsanitized.js"
 export * from "./html/untab.js"
 
+export * from "./patterns/easypage.js"
+export * from "./patterns/startup_scripts_with_debug_mode.js"
+
 export * from "./utils/hashing/apply_file_hash_to_url.js"
 export * from "./utils/hashing/compute_hash_for_file.js"
 export * from "./utils/escape_html.js"

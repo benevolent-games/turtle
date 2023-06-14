@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+path=${1:-"x/main.js"}
+
+dir=$(dirname $path)
+base=$(basename $path)
+extension="${base##*.}"
+plain="${base%.*}"
+
+bundle="$dir/$plain.bundle.$extension"
+minified="$dir/$plain.bundle.min.$extension"
+
+rollup $path \
+	-p @rollup/plugin-node-resolve \
+	--format es \
+	--file $bundle \
+	&& terser $bundle \
+		-cm \
+		--source-map \
+		--comments false \
+		-o $minified;
+

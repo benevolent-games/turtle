@@ -6,7 +6,12 @@
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
 	"main": "x/index.js",
-	"bin": "x/cli.js",
+	"bin": {
+		"turtle": "x/cli.js",
+		"turtle-install": "scripts/install",
+		"turtle-build": "scripts/build",
+		"turtle-bundle": "scripts/bundle"
+	},
 	"files": [
 		"x",
 		"s"

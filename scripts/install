@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+npm i --save-dev \
+	importly@latest \
+	typescript@latest \
+	rollup@latest \
+	@rollup/plugin-node-resolve@latest \
+	terser@latest;
+
