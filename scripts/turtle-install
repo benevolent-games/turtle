@@ -5,5 +5,7 @@ npm i --save-dev \
 	typescript@latest \
 	rollup@latest \
 	@rollup/plugin-node-resolve@latest \
-	terser@latest;
+	terser@latest \
+	chokidar@latest \
+	chokidar-cli@latest;
 
