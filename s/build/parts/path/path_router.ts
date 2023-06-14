@@ -27,7 +27,7 @@ export class PathRouter {
 		this.version = new PathVersioner(discovery)
 	}
 
-	root(link: string) {
+	root(link: string = "") {
 		return this.#discovery.root(link).url
 	}
 
