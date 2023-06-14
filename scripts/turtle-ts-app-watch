@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-tsc -w
+s=${1:-"s"}
+x=${2:-"x"}
+
+(trap 'kill 0' SIGINT; tsc -w & http-server $x & wait)
 

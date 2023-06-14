@@ -8,11 +8,14 @@
 	"main": "x/index.js",
 	"bin": {
 		"turtle": "x/cli.js",
-		"turtle-bundle": "scripts/turtle-bundle",
 		"turtle-install": "scripts/turtle-install",
+		"turtle-standard": "scripts/turtle-standard",
+		"turtle-standard-watch": "scripts/turtle-standard-watch",
 		"turtle-ts-app": "scripts/turtle-ts-app",
+		"turtle-ts-app-bundle": "scripts/turtle-ts-app-bundle",
 		"turtle-ts-app-watch": "scripts/turtle-ts-app-watch",
-		"turtle-watch": "scripts/turtle-watch"
+		"turtle-web": "scripts/turtle-web",
+		"turtle-web-watch": "scripts/turtle-web-watch"
 	},
 	"files": [
 		"x",
