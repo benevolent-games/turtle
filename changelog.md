@@ -1,6 +1,10 @@
 
 # turtle changelog
 
+### v0.3.2 (2023-06-13)
+
+- add common boilerplate scripts and patterns
+
 ### v0.3.1 (2023-06-13)
 
 - export 'PathRouter' from "@benev/turtle"
