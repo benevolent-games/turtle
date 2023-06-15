@@ -10,14 +10,14 @@ export class PathRouter {
 
 	static make_path_routing_function({
 			destination_path,
-			web_root_that_contains_template_module,
+			web_root_for_output,
 		}: Omit<PathConcepts, "template_path">): PathRoutingFunction {
 
-		return (template_meta_url: string) => new PathRouter(
+		return (import_meta_url: string) => new PathRouter(
 			new PathDiscovery({
 				destination_path,
-				web_root_that_contains_template_module,
-				template_path: template_meta_url.slice("file://".length),
+				web_root_for_output,
+				template_path: import_meta_url.slice("file://".length),
 			})
 		)
 	}

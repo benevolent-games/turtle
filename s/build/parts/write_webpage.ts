@@ -39,7 +39,7 @@ export async function write_webpage<C>({
 	const basics: TemplateBasics = {
 		path: PathRouter.make_path_routing_function({
 			destination_path: final_destination.absolute,
-			web_root_that_contains_template_module: resolve(path.directory),
+			web_root_for_output: final_destination.directory,
 		}),
 	}
 

@@ -171,8 +171,8 @@ export default <Suite>{
 	"path routing": async() => {
 		const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
 		const path = PathRouter.make_path_routing_function({
+			web_root_for_output: "/home/chase/work/@benev/turtle/x/demo",
 			destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
-			web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
 		})
 
 		return {
@@ -183,8 +183,8 @@ export default <Suite>{
 			async "local can find its way back to module's directory"() {
 				const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
 				const path = PathRouter.make_path_routing_function({
+					web_root_for_output: "/home/chase/work/@benev/turtle/x/demo",
 					destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
-					web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
 				})
 				expect(path(url).local("style.css")).equals("../stamping/style.css")
 			},
@@ -192,8 +192,8 @@ export default <Suite>{
 			async "dest just returns the same path"() {
 				const url = "file:///home/chase/work/@benev/turtle/x/demo/stamping/stamp.partial.html.js"
 				const path = PathRouter.make_path_routing_function({
+					web_root_for_output: "/home/chase/work/@benev/turtle/x/demo",
 					destination_path: "/home/chase/work/@benev/turtle/x/demo/lol/2.html",
-					web_root_that_contains_template_module: "/home/chase/work/@benev/turtle/x/demo",
 				})
 				expect(path(url).dest("style.css")).equals("style.css")
 			},

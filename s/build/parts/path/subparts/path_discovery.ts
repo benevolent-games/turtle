@@ -9,8 +9,8 @@ export type PathConcepts = {
 	/** the absolute file path of the final html output's destination */
 	destination_path: string
 
-	/** the absolute directory path of the web root that contains the template module (remember that turtle can read multiple different directory trees as sources)  */
-	web_root_that_contains_template_module: string
+	/** the absolute directory path of the web root that output is written to */
+	web_root_for_output: string
 }
 
 export class PathDiscovery {
@@ -21,8 +21,8 @@ export class PathDiscovery {
 	}
 
 	root(link: string) {
-		const {template_path, web_root_that_contains_template_module} = this.#concepts
-		const filepath = normalize(join(web_root_that_contains_template_module, link))
+		const {template_path, web_root_for_output} = this.#concepts
+		const filepath = normalize(join(web_root_for_output, link))
 		const url = relative(dirname(template_path), filepath)
 		return {url, filepath}
 	}
