@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 dir="$(dirname $0)"
+in=${1:-"s:x"}
+out=${2:-"x"}
+exclude=${3:-"**/*.partial.html.js:**/*.map"}
 
-(trap 'kill 0' SIGINT; "$dir/turtle-ts-app-watch" & "$dir/turtle-web-watch" & wait)
+(trap 'kill 0' SIGINT; \
+	"$dir/turtle-ts-app-watch" & \
+	"$dir/turtle-web-watch" "$in" "$out" "$exclude" & \
+	wait)
 

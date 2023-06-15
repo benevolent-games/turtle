@@ -6,5 +6,5 @@ out=${2:-"x"}
 exclude=${3:-"**/*.partial.html.js:**/*.map"}
 
 "$dir/turtle-ts-app"
-"$dir/turtle-web" $in $out $exclude
+"$dir/turtle-web" "$in" "$out" "$exclude"
 

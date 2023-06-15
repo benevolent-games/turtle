@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
 dir="$(dirname $0)"
-s=${1:-"s"}
-x=${2:-"x"}
-in=${3:-"s:x"}
-exclude=${4:-"**/*.partial.html.js"}
+in=${1:-"s:x"}
+out=${2:-"x"}
+exclude=${3:-"**/*.partial.html.js:**/*.map"}
 
 chokidar \
 	"package.json" \
-	"$s/**/*.css" \
-	"$x/**/*.html.js" \
-	"$x/**/*.turtle.js" \
-	"$x/**/*.context.js" \
-	-c "$dir/turtle-web '$in' '$x' '$exclude'";
+	"s/**/*.css" \
+	"x/**/*.html.js" \
+	"x/**/*.turtle.js" \
+	"x/**/*.context.js" \
+	-c "$dir/turtle-web '$in' '$out' '$exclude'";
 
