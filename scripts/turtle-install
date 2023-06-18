@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+npm i es-module-shims@latest;
+
 npm i --save-dev \
-	importly@latest \
 	typescript@latest \
+	importly@latest \
 	rollup@latest \
 	@rollup/plugin-node-resolve@latest \
 	terser@latest \
