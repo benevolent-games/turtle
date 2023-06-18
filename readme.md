@@ -75,18 +75,18 @@ import {template, html} from "@benev/turtle"
 const {url} = import.meta
 
 export default template(async({path}, x: number) => html`
-	<!doctype html>
-	<html>
-		<head>
-			<meta charset="utf-8"/>
-			<title>@benev/turtle - stamp test</title>
-			<link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
-		</head>
-		<body>
-			<h1>@benev/turtle - stamp test</h1>
-			<p>${x}</p>
-		</body>
-	</html>
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8"/>
+      <title>@benev/turtle - stamp test</title>
+      <link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
+    </head>
+    <body>
+      <h1>@benev/turtle - stamp test</h1>
+      <p>${x}</p>
+    </body>
+  </html>
 `)
 ```
 
@@ -112,23 +112,23 @@ const values = [1, 2]
 // your default export must be a turtle_script
 export default turtle_script(async({write_webpage}) => {
 
-	// loop over each value
-	await Promise.all(values.map(async(x) => {
+  // loop over each value
+  await Promise.all(values.map(async(x) => {
 
-		// write a webpage
-		await write_webpage({
+    // write a webpage
+    await write_webpage({
 
-			// provide the page template
-			template: page,
+      // provide the page template
+      template: page,
 
-			// provide the x value in the context
-			context: x,
+      // provide the x value in the context
+      context: x,
 
-			// specify the destination relative
-			// to this build script
-			destination: `${x}.html`,
-		})
-	}))
+      // specify the destination relative
+      // to this build script
+      destination: `${x}.html`,
+    })
+  }))
 })
 ```
 
