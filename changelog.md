@@ -1,6 +1,14 @@
 
 # turtle changelog
 
+### v0.4.0 (2023-06-20)
+
+- ! replace `startup_scripts_with_debug_mode` with the new `startup_scripts_with_dev_mode`
+  - if the website url location host starts with `localhost` or `192.`, dev mode is enabled
+  - `?dev=false` force-disables dev mode (loads the bundle)
+  - `?dev=true` force-enables dev mode (loads es modules)
+  - the new routine adds the prefix `[dev]` to the document title, to make it obvious when you're in dev mode
+
 ### v0.3.2 (2023-06-13)
 
 - add common boilerplate scripts and patterns
