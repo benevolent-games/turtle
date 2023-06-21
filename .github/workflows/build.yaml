@@ -30,6 +30,3 @@ jobs:
     - name: 🧪 test
       run: npm test
 
-    - name: 🎁 demo
-      run: npm run demo -s
-

@@ -22,7 +22,7 @@
 		"s"
 	],
 	"scripts": {
-		"build": "run-s clean compile permissions",
+		"build": "run-s clean compile permissions demo",
 		"clean": "rm -rf x && mkdir x",
 		"compile": "tsc",
 		"permissions": "chmod +x x/cli.js",
