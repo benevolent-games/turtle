@@ -16,13 +16,19 @@ export const default_script_locations = (): StartupLocations => ({
 	es_module_shims: "node_modules/es-module-shims/dist/es-module-shims.wasm.js",
 })
 
-export const startup_scripts_with_debug_mode = (
+export const startup_scripts_with_dev_mode = (
 		path: PathRouter,
 		locations: StartupLocations = default_script_locations(),
 	) => html`
 	<script>
 		const params = new URLSearchParams(window.location.search)
-		const launch_in_debug_mode = params.get("debug") === "true"
+
+		const launch_in_dev_mode = params.has("dev")
+			? params.get("dev") !== "false"
+			: (
+				window.location.host.startsWith("localhost") ||
+				window.location.host.startsWith("192.")
+			)
 
 		function script(attributes) {
 			const element = document.createElement("script")
@@ -34,7 +40,8 @@ export const startup_scripts_with_debug_mode = (
 			document.head.appendChild(element)
 		}
 
-		if (launch_in_debug_mode) {
+		if (launch_in_dev_mode) {
+			document.title = "[dev] " + document.title
 
 			script({
 				type: "importmap-shim",
