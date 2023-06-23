@@ -234,7 +234,7 @@ there are more [scripts/](./scripts/) but i don't feel like documenting them all
 
 these are just functions for your turtle html templates that make life easier.
 
-- `easypage` returns takes care of the boilerplate of an ordinary html page, it takes care of the meta charset and the meta viewport stuff.
+- `easypage` takes care of the boilerplate of an ordinary html page, it takes care of the meta charset and the meta viewport stuff.
 
 - `startup_scripts_with_dev_mode` will load your app via the rollup bundle in production, but in dev mode, it will load your app as individual es modules.
   - you can add `?dev=true` to your website's url to enable dev mode
