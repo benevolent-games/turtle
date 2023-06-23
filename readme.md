@@ -1,30 +1,38 @@
 
+![](./assets/turtle-title.webp)
+
 # 🐢 `@benev/turtle`
 
-*slow and steady static site generator*
-
-- turtle is a one-line command that generates a website
-- you write html templates in plain javascript
-- templates are just async functions, so you can do *anything*
-- you can kind of imagine it like some kind of static javascript "php"
-- turtle also copies other files like css and whatnot
-- turtle has proper typescript typings
+📦 turtle is an npm package: [`@benev/turtle`](https://www.npmjs.com/package/@benev/turtle)  
+🪄 turtle is a one-line static-site-generator  
+📜️ turtle scripts standardize our ts app builds  
+⚙️ turtle patterns optimize our websites' prod/dev modes  
+🧐 turtle is typescript-first, but you can use plain javascript  
+❤️ turtle is free and open source  
 
 <br/>
+<br/>
 
-## turtle turtorial
+# 🪄 turtle static-site-generator
 
-note, turtle doesn't care whether you use typescript or plain javascript, but in the examples here i'll be using the two interchangeably.
+- turtle's original and primary purpose is to be a static site generator
+- `turtle` a one-line command that sniffs out your `.html.js` files and renders them into html files
+- turtle provides your templates a `path` utility that has *hash versioning* capabilities, to fix browser-caching issues with your css on deployments
+- turtle also copies over css files and such
+- turtle also executes `.turtle.js` scripts
 
 <br/>
 
 ### generate a website with turtle's cli
 
 ```sh
-npx @benev/turtle --in="s/demo:x/demo" --out="x/demo" --exclude="**/*.partial.html.js" --verbose="true"
+npx @benev/turtle --in="s:x" --out="x" --exclude="**/*.partial.html.js" --verbose="true"
 ```
 
 ![image: turtle example output](https://i.imgur.com/IpAi0rF.png)
+
+note: turtle can accept multiple input directories.  
+that's because you'll likely keep your `.css` files alongside your typescript sources, whereas your `.html.js` javascript will be built into your typescript's output directory.
 
 <br/>
 
@@ -38,20 +46,24 @@ npx @benev/turtle --help
 
 <br/>
 
-### write your first webpage template, like `index.html.js`
+### write your first webpage template
 
-turtle will sniff out your `.html.js` files, and render them into html pages.
+turtle will sniff out your `.html.js` files as inputs, then output matching `.html` files.
+
+`index.html.js`
 
 ```js
 import {template, html} from "@benev/turtle"
-const {url} = import.meta
 
 export default template(async({path}) => html`
   <!doctype html>
   <html>
     <head>
       <title>@benev/turtle</title>
-      <link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
+      <link
+        rel="stylesheet"
+        href="${path(import.meta.url).version.root('style.css')}"
+        />
     </head>
     <body>
       <h1>@benev/turtle</h1>
@@ -64,15 +76,12 @@ export default template(async({path}) => html`
 
 ### you can write template partials
 
-it can accept a context object
+notice the `x` parameter, which is the example "context" for this template. it doesn't need to be a number, it could be anything.
 
-you tell turtle to ignore it with `--exclude="**/*.partial.html.js"`
-
-`page.partial.html.ts`
+`page.partial.ts`
 
 ```ts
 import {template, html} from "@benev/turtle"
-const {url} = import.meta
 
 export default template(async({path}, x: number) => html`
   <!doctype html>
@@ -80,7 +89,10 @@ export default template(async({path}, x: number) => html`
     <head>
       <meta charset="utf-8"/>
       <title>@benev/turtle - stamp test</title>
-      <link rel="stylesheet" href="${path(url).version.root('style.css')}"/>
+      <link
+        rel="stylesheet"
+        href="${path(import.meta.url).version.root('style.css')}"
+        />
     </head>
     <body>
       <h1>@benev/turtle - stamp test</h1>
@@ -92,7 +104,7 @@ export default template(async({path}, x: number) => html`
 
 <br/>
 
-### write your first turtle script, like `stamp.turtle.js`
+### write your first turtle script
 
 turtle also sniffs out `.turtle.js` scripts and executes them.
 
@@ -104,7 +116,7 @@ in these, you can do anything you want. your turtle script function is provided 
 import {turtle_script} from "@benev/turtle"
 
 // import the partial from the previous example
-import page from "./page.partial.html.js"
+import page from "./page.partial.js"
 
 // we'll stamp out a webpage for each of these values
 const values = [1, 2]
@@ -135,7 +147,7 @@ export default turtle_script(async({write_webpage}) => {
 <br/>
 
 ### you've gotta get into *file path hash versioning!*
-- that's what the above example is doing with that `path` function
+- some of the above examples are using this `path` function
 - if you use `.version` then it will attach the file's hash as a suffix
 - so `/style.css` becomes `/style.css?v=c252882f`
 - now when you deploy your site, your users won't see old cached css files that break your website -- now the browser cache becomes *version aware!* 🤯
@@ -192,4 +204,41 @@ simply add `.version` to the above commands, and turtle will attach a hash query
 ### be sure to escape globs
 
 - if you provide a glob to a flag like `--exclude="partials/**/*"` -- be sure to use double quotes so that your shell doesn't expand the glob -- the double quotes tells your shell to pass the literal glob to turtle, which will then process the glob properly (if you let the shell expand the glob, it won't work)
+
+<br/>
+<br/>
+
+# 📜️ turtle scripts
+
+we use turtle scripts to standardize the whole build routine for our typescript apps across our many projects, to reduce repetitive boilerplate and centralize its maintenance.
+
+with turtle installed, you can run these scripts with like `npx turtle-standard` at the command line, or in an npm package.json script, just `turtle-standard` will work as a one-line command.
+
+primary scripts:
+
+- **`turtle-install`**  
+  run this once to install the dependencies for these scripts into your current project.
+
+- **`turtle-standard`**  
+  run a standard typescript build, rollup bundle, and run the turtle static site generator.
+
+- **`turtle-standard-watch`**  
+  run the http-server, and watch routine for the standard build.
+
+there are more [scripts/](./scripts/) but i don't feel like documenting them all.
+
+<br/>
+<br/>
+
+# ⚙️ turtle patterns
+
+these are just functions for your turtle html templates that make life easier.
+
+- `easypage` returns takes care of the boilerplate of an ordinary html page, it takes care of the meta charset and the meta viewport stuff.
+
+- `startup_scripts_with_dev_mode` will load your app via the rollup bundle in production, but in dev mode, it will load your app as individual es modules.
+  - you can add `?dev=true` to your website's url to enable dev mode
+  - if you are browsing your website from a `localhost` address, dev mode will be enabled by default
+  - you can force disable dev mode with `?dev=false`
+  - the document title will be prefixed with `[dev]` when dev mode is enabled, to make it obvious
 
