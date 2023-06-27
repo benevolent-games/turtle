@@ -37,11 +37,11 @@
 	"dependencies": {
 		"@benev/argv": "^0.1.0",
 		"@types/shelljs": "^0.8.12",
-		"glob": "^10.2.7",
+		"glob": "^10.3.0",
 		"shelljs": "^0.8.5"
 	},
 	"devDependencies": {
-		"@types/node": "^20.3.1",
+		"@types/node": "^20.3.2",
 		"chokidar": "^3.5.3",
 		"chokidar-cli": "^3.0.0",
 		"cynic": "^0.2.1",
