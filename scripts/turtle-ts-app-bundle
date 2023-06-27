@@ -15,7 +15,9 @@ rollup $path \
 	--format es \
 	--file $bundle \
 	&& terser $bundle \
-		-cm \
+		--module \
+		--compress \
+		--mangle \
 		--source-map \
 		--comments false \
 		-o $minified;
