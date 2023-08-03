@@ -10,10 +10,19 @@ plain="${base%.*}"
 bundle="$dir/$plain.bundle.$extension"
 minified="$dir/$plain.bundle.min.$extension"
 
+polyfills="
+	Array.prototype.at = function(index) {
+		return index >= 0
+			? this[index]
+			: this[this.length + index]
+	}
+"
+
 rollup $path \
 	-p @rollup/plugin-node-resolve \
 	--format es \
 	--file $bundle \
+	&& echo "$polyfills$(cat $bundle)" > $bundle \
 	&& terser $bundle \
 		--module \
 		--compress \
