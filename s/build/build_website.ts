@@ -44,18 +44,18 @@ export async function build_website<xContext extends {}>({
 		on_file_copied,
 	)
 
-	await build_all_webpages(
-		paths.templates,
-		output_directory,
-		context,
-		on_file_written,
-	)
-
 	await run_all_turtle_scripts(
 		paths.turtle_scripts,
 		output_directory,
 		on_file_written,
 		on_turtle_script_executed,
+	)
+
+	await build_all_webpages(
+		paths.templates,
+		output_directory,
+		context,
+		on_file_written,
 	)
 }
 

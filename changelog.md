@@ -1,6 +1,10 @@
 
 # turtle changelog
 
+- ! execute turtle scripts *before* the html build stage
+  - this allows you to write files that can be hash-versioned in your templates
+- add `read_file` function
+
 ### v0.4.0 (2023-06-20)
 
 - ! replace `startup_scripts_with_debug_mode` with the new `startup_scripts_with_dev_mode`
