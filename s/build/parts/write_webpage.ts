@@ -7,7 +7,7 @@ import {untab} from "../../html/untab.js"
 import {debase_path} from "./debase_path.js"
 import {PathRouter} from "./path/path_router.js"
 import {OutputLogger} from "../types/loggers.js"
-import {write_file} from "../../utils/write_file.js"
+import {write_file} from "../../utils/file_io.js"
 import {TemplateBasics} from "../types/template_basics.js"
 
 export async function write_webpage<C>({
