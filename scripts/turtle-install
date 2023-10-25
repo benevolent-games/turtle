@@ -3,6 +3,7 @@
 npm i es-module-shims@latest;
 
 npm i --save-dev \
+	http-server@latest \
 	typescript@latest \
 	importly@latest \
 	rollup@latest \
