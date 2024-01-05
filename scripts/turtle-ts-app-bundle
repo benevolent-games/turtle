@@ -20,6 +20,7 @@ polyfills="
 
 rollup $path \
 	-p @rollup/plugin-node-resolve \
+	-p @rollup/plugin-wasm \
 	--format es \
 	--file $bundle \
 	&& echo "$polyfills$(cat $bundle)" > $bundle \

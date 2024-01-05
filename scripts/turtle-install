@@ -8,6 +8,7 @@ npm i --save-dev \
 	importly@latest \
 	rollup@latest \
 	@rollup/plugin-node-resolve@latest \
+	@rollup/plugin-wasm@latest \
 	terser@latest \
 	chokidar@latest \
 	chokidar-cli@latest;
