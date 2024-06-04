@@ -2,24 +2,18 @@
 import {html} from "../html/html.js"
 import {PathRouter} from "../build/parts/path/path_router.js"
 
-export type StartupLocations = {
-	script: string
-	script_bundle: string
-	importmap: string
-	es_module_shims: string
-}
+export const startup_scripts_with_dev_mode = ({
+		path,
+		importmap = "importmap.json",
+		scripts = [{module: "main.js", bundle: "main.bundled.min.js"}],
+		es_module_shims = "node_modules/es-module-shims/dist/es-module-shims.wasm.js",
+	}: {
+		path: PathRouter
+		scripts?: {module: string, bundle: string}[]
+		importmap?: string
+		es_module_shims?: string
+	}) => html`
 
-export const default_script_locations = (): StartupLocations => ({
-	script: "main.js",
-	script_bundle: "main.bundle.min.js",
-	importmap: "importmap.json",
-	es_module_shims: "node_modules/es-module-shims/dist/es-module-shims.wasm.js",
-})
-
-export const startup_scripts_with_dev_mode = (
-		path: PathRouter,
-		locations: StartupLocations = default_script_locations(),
-	) => html`
 	<script>
 		const params = new URLSearchParams(window.location.search)
 
@@ -45,25 +39,30 @@ export const startup_scripts_with_dev_mode = (
 
 			script({
 				type: "importmap-shim",
-				src: "${path.version.root(locations.importmap)}",
+				src: "${path.version.root(importmap)}",
 			})
 
-			script({
-				type: "module-shim",
-				src: "${path.version.root(locations.script)}",
-			})
+			${scripts.map(s => `
+				script({
+					type: "module-shim",
+					src: "${path.version.root(s.module)}",
+				})
+			`)}
 
 			script({
 				type: "module",
-				src: "${path.version.root(locations.es_module_shims)}",
+				src: "${path.version.root(es_module_shims)}",
 			})
 		}
 		else {
 
-			script({
-				type: "module",
-				src: "${path.version.root(locations.script_bundle)}",
-			})
+			${scripts.map(s => `
+				script({
+					type: "module",
+					src: "${path.version.root(s.bundle)}",
+				})
+			`)}
+
 		}
 	</script>
 `

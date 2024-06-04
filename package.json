@@ -35,19 +35,24 @@
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
-		"@benev/argv": "^0.1.0",
-		"@types/shelljs": "^0.8.15",
-		"glob": "^10.3.10",
-		"shelljs": "^0.8.5"
+		"@benev/argv": "^0.3.3",
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@rollup/plugin-wasm": "^6.2.2",
+		"glob": "^10.4.1",
+		"globby": "^14.0.1",
+		"importly": "^0.2.3",
+		"rollup": "^4.18.0",
+		"terser": "^5.31.0",
+		"zx": "^8.1.2",
+		"chokidar": "^3.6.0",
+		"chokidar-cli": "^3.0.0",
+		"http-server": "^14.1.1"
 	},
 	"devDependencies": {
-		"@types/node": "^20.10.6",
-		"chokidar": "^3.5.3",
-		"chokidar-cli": "^3.0.0",
+		"@types/node": "^20.14.1",
 		"cynic": "^0.2.1",
-		"http-server": "^14.1.1",
 		"npm-run-all": "^4.1.5",
-		"typescript": "^5.3.3"
+		"typescript": "^5.4.5"
 	},
 	"keywords": [
 		"static-site-generator",
