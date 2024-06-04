@@ -51,7 +51,7 @@ export const startup_scripts_with_dev_mode = ({
 
 			script({
 				type: "module",
-				src: "${path.version.root(es_module_shims)}",
+				src: "${path.root(es_module_shims)}",
 			})
 		}
 		else {

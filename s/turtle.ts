@@ -2,12 +2,13 @@
 
 import {$} from "zx"
 import {cli, command} from "@benev/argv"
-import {ssgparams, buildparams} from "./build/parts/stdparams.js"
 import {turtleCopy} from "./build/procedures/turtle-copy.js"
 import {turtlePages} from "./build/procedures/turtle-pages.js"
+import {ssgparams, buildparams} from "./build/parts/stdparams.js"
 import {turtleBundles} from "./build/procedures/turtle-bundles.js"
 import {turtleScripts} from "./build/procedures/turtle-scripts.js"
 import {turtleSsgWatch} from "./build/procedures/watches/turtle-ssg-watch.js"
+import {turtleBuildWatch} from "./build/procedures/watches/turtle-build-watch.js"
 
 await cli(process.argv, {
 	name: "turtle",
@@ -50,7 +51,7 @@ await cli(process.argv, {
 			params: ssgparams,
 			async execute(o) {
 				await Promise.all([
-					$`tsc -w`,
+					turtleBuildWatch(o),
 					turtleSsgWatch(o),
 				])
 			},
@@ -58,9 +59,9 @@ await cli(process.argv, {
 
 		"build-watch": command({
 			args: [],
-			params: {},
-			async execute() {
-				await $`tsc -w`
+			params: buildparams,
+			async execute(o) {
+				await turtleBuildWatch(o)
 			},
 		}),
 

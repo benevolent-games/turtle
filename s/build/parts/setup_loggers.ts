@@ -16,9 +16,6 @@ export const setup_loggers = ({verbose}: {
 		verbose: boolean
 	}): WebsiteLoggers => {
 
-	if (verbose)
-		console.log(color.green("🐢 turtle"))
-
 	return (verbose
 
 		? {
