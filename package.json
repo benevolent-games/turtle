@@ -15,7 +15,7 @@
 		"build": "run-s clean compile permissions demo",
 		"clean": "rm -rf x && mkdir x",
 		"compile": "tsc",
-		"permissions": "chmod +x x/cli.js",
+		"permissions": "chmod +x x/turtle.js",
 		"start": "run-p watch http",
 		"http": "http-server x/demo",
 		"watch": "tsc -w",

@@ -1,7 +1,7 @@
 
 import {DistillParams, Params, list, param, string} from "@benev/argv"
 
-export const stdparams = {
+export const ssgparams = {
 
 	in: param.required(list(string), {
 		help: `
@@ -31,7 +31,17 @@ export const stdparams = {
 
 } satisfies Params
 
-export type StdInputs<T extends Params = {}> = {
-	params: DistillParams<typeof stdparams> & DistillParams<T>
+export const buildparams = {
+	out: ssgparams.out,
+	verbose: ssgparams.verbose,
+	exclude: ssgparams.exclude,
+}
+
+export type SsgInputs<T extends Params = {}> = {
+	params: DistillParams<typeof ssgparams> & DistillParams<T>
+}
+
+export type BuildInputs<T extends Params = {}> = {
+	params: DistillParams<typeof buildparams> & DistillParams<T>
 }
 

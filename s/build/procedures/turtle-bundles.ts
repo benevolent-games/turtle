@@ -1,10 +1,14 @@
 
 import {$} from "zx"
 import {globby} from "globby"
+import {stdignore} from "../parts/stdignore.js"
 
-export async function turtleBundles(cwd: string, ignore: string[] = []) {
+export async function turtleBundles(cwd: string, excludes: string[] = []) {
+	const ignore = stdignore(excludes)
 	const bundles = await globby(["**/*.bundle.js"], {cwd, ignore})
-	for (const bundle of bundles) {
+
+	for (const relativePath of bundles) {
+		const bundle = `${cwd}/${relativePath}`
 		const bundled = bundle.replace(".bundle.js", ".bundled.js")
 		const bundledMin = bundle.replace(".bundle.js", ".bundled.min.js")
 		await $`
