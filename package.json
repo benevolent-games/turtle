@@ -6,17 +6,7 @@
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
 	"main": "x/index.js",
-	"bin": {
-		"turtle": "x/cli.js",
-		"turtle-install": "scripts/turtle-install",
-		"turtle-standard": "scripts/turtle-standard",
-		"turtle-standard-watch": "scripts/turtle-standard-watch",
-		"turtle-ts-app": "scripts/turtle-ts-app",
-		"turtle-ts-app-bundle": "scripts/turtle-ts-app-bundle",
-		"turtle-ts-app-watch": "scripts/turtle-ts-app-watch",
-		"turtle-web": "scripts/turtle-web",
-		"turtle-web-watch": "scripts/turtle-web-watch"
-	},
+	"bin": "x/turtle.js",
 	"files": [
 		"x",
 		"s"

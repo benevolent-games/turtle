@@ -8,14 +8,14 @@ export async function turtleBundles(cwd: string, ignore: string[] = []) {
 		const bundled = bundle.replace(".bundle.js", ".bundled.js")
 		const bundledMin = bundle.replace(".bundle.js", ".bundled.min.js")
 		await $`
-			rollup ${bundle} \
+			npx rollup ${bundle} \
 				-p @rollup/plugin-node-resolve \
 				-p @rollup/plugin-wasm \
 				--format es \
 				--file ${bundled}
 		`
 		await $`
-			terser ${bundled} \
+			npx terser ${bundled} \
 				--module \
 				--compress \
 				--mangle \

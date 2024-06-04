@@ -1,19 +1,24 @@
+#!/usr/bin/env node
 
 import {$} from "zx"
 import {cli, command} from "@benev/argv"
 import {stdparams} from "./build/parts/stdparams.js"
-import {stdcommand} from "./build/parts/stdcommand.js"
 import {turtleCopy} from "./build/procedures/turtle-copy.js"
 import {turtlePages} from "./build/procedures/turtle-pages.js"
 import {turtleBundles} from "./build/procedures/turtle-bundles.js"
 import {turtleScripts} from "./build/procedures/turtle-scripts.js"
+import {turtleSsgWatch} from "./build/procedures/turtle-ssg-watch.js"
 
 await cli(process.argv, {
-	name: "🐢 turtle",
-	help: `static site generator.`,
+	name: "turtle",
+	help: `🐢 static site generator.`,
 	commands: {
 
 		ts: command({
+			help: `
+				run a standard typescript app build.
+				generate an importmap.json, create a symlink to node_modules, run your ts build, and bundle up your ".bundle.js" files to produce ".bundled.min.js" files.
+			`,
 			args: [],
 			params: {
 				out: stdparams.out,
@@ -21,25 +26,60 @@ await cli(process.argv, {
 				exclude: stdparams.exclude,
 			},
 			async execute({params}) {
-				await $`mkdir -p ${params.out}`
-				await $`importly --host=node_modules < package-lock.json > ${params.out}/importmap.json`
-				await $`ln -s $(realpath node_modules) ${params.out}/node_modules`
-				await $`tsc`
+				await $`mkdir -p "${params.out}"`
+				await $`npx importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
+				await $`ln -s "$(realpath node_modules)" "${params.out}/node_modules"`
+				await $`npx tsc`
 				await turtleBundles(params.out, params.exclude)
 			},
 		}),
 
-		web: stdcommand(async o => {
-			await turtleCopy(o)
-			await turtleScripts(o)
-			await turtlePages(o)
+		ssg: command({
+			help: `
+				run the turtle static site generator.
+				copy files, run ".turtle.js" scripts, and build ".html.js" turtle pages.
+			`,
+			args: [],
+			params: stdparams,
+			async execute(o) {
+				await turtleCopy(o)
+				await turtleScripts(o)
+				await turtlePages(o)
+			},
 		}),
 
-		run: {
-			copy: stdcommand(turtleCopy),
-			scripts: stdcommand(turtleScripts),
-			pages: stdcommand(turtlePages),
-		},
+		watch: command({
+			args: [],
+			params: stdparams,
+			async execute(o) {
+				await Promise.all([
+					$`tsc -w`,
+					turtleSsgWatch(o),
+				])
+			},
+		}),
+
+		"ts-watch": command({
+			args: [],
+			params: {},
+			async execute() {
+				await $`tsc -w`
+			},
+		}),
+
+		"ssg-watch": command({
+			args: [],
+			params: stdparams,
+			async execute(o) {
+				await turtleSsgWatch(o)
+			},
+		}),
+
+		// run: {
+		// 	copy: stdcommand(turtleCopy),
+		// 	scripts: stdcommand(turtleScripts),
+		// 	pages: stdcommand(turtlePages),
+		// },
 
 	},
 }).execute()
