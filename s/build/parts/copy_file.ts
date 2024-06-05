@@ -1,5 +1,5 @@
 
-import shell from "shelljs"
+import {$} from "zx"
 import {dirname, resolve} from "path"
 import {Path} from "../../utils/path.js"
 
@@ -23,8 +23,8 @@ export async function copy_file(
 	)
 
 	if (is_not_the_same_file) {
-		shell.mkdir("-p", dirname(target.relative))
-		shell.cp(source.relative, target.relative)
+		await $`mkdir -p "${dirname(target.relative)}"`
+		await $`cp "${source.relative}" "${target.relative}"`
 		on_file_copied(source, target)
 	}
 }

@@ -1,8 +1,27 @@
 #!/usr/bin/env bash
 
+set -e
+
 s=${1:-"s"}
 x=${2:-"x"}
 main=${3:-"main.js"}
+
+# Function to check if a directory is safe to remove
+is_safe_to_remove() {
+	local dir=$1
+
+	# Get absolute path
+	abs_dir=$(realpath "$dir")
+
+	# Check if the directory is root or empty
+	if [ "$abs_dir" = "/" ] || [ -z "$abs_dir" ]; then
+		echo "Error: Refusing to remove root or empty directory."
+		exit 1
+	fi
+}
+
+# Check if the directory is safe to remove
+is_safe_to_remove "$x"
 
 rm -rf $x && mkdir -p $x
 importly --host=node_modules < package-lock.json > $x/importmap.json

@@ -34,7 +34,7 @@ export async function run_all_turtle_scripts(
 
 	async function execute_script(path: Path) {
 		try {
-			const script = await import(path.absolute)
+			const script = await import(path.absolute + `?nocache=${Date.now()}`)
 			const script_directory = dirname(path.partial)
 			const meta: ScriptMeta = {
 				path,

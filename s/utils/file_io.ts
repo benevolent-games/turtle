@@ -1,5 +1,5 @@
 
-import shell from "shelljs"
+import {$} from "zx"
 import {dirname} from "path"
 import {writeFile, readFile} from "fs/promises"
 
@@ -10,7 +10,7 @@ export async function read_file(path: string) {
 }
 
 export async function write_file(path: string, text: string) {
-	shell.mkdir("-p", dirname(path))
+	await $`mkdir -p "${dirname(path)}"`
 	return writeFile(path, text.toString(), encoding)
 }
 
