@@ -25,7 +25,7 @@
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
-		"@benev/argv": "^0.3.3",
+		"@benev/argv": "^0.3.4",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-wasm": "^6.2.2",
 		"chokidar": "^3.6.0",
