@@ -42,7 +42,7 @@ export const startup_scripts_with_dev_mode = ({
 				src: "${path.version.root(importmap)}",
 			})
 
-			${scripts.map(s => `
+			${scripts.map(s => html`
 				script({
 					type: "module-shim",
 					src: "${path.version.root(s.module)}",
@@ -56,7 +56,7 @@ export const startup_scripts_with_dev_mode = ({
 		}
 		else {
 
-			${scripts.map(s => `
+			${scripts.map(s => html`
 				script({
 					type: "module",
 					src: "${path.version.root(s.bundle)}",

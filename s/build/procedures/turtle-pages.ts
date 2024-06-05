@@ -7,13 +7,15 @@ import {build_all_webpages} from "../routines/build_all_webpages.js"
 
 export async function turtlePages({params}: SsgInputs) {
 	const loggers = setup_loggers(params)
+	const ignore = stdignore(params.exclude ?? [])
+	const files = await find_files(
+		params.in,
+		ignore,
+		"**/*.html.js",
+	)
 
 	await build_all_webpages(
-		await find_files(
-			params.in,
-			stdignore(params.exclude ?? []),
-			"**/*.html.js",
-		),
+		files,
 		params.out,
 		{},
 		loggers.on_file_written,

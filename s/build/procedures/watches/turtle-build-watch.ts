@@ -14,7 +14,8 @@ export async function turtleBuildWatch({params}: BuildInputs) {
 	// 	`**/*.bundled.min.js`,
 	// ]
 
-	$`tsc -w`
+	$.spawn("tsc", ["-w"], {stdio: "inherit"})
+	// $`tsc -w`
 
 	// chokidar.watch(pattern, {ignored})
 	// 	.on("all", debounce(5000, async() => {
