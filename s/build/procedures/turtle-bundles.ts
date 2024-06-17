@@ -11,23 +11,23 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 	for (const relativePath of bundles) {
 		const bundle = `${cwd}/${relativePath}`
 		const bundled = bundle.replace(".bundle.js", ".bundled.js")
-		const bundledMin = bundle.replace(".bundle.js", ".bundled.min.js")
 		await $`
 			npx rollup ${bundle} \
 				-p @rollup/plugin-node-resolve \
 				-p @rollup/plugin-wasm \
+				-p @rollup/plugin-terser \
 				--format es \
 				--dir ${dirname(bundled)}
 		`
-		await $`
-			npx terser ${bundled} \
-				--module \
-				--compress \
-				--mangle \
-				--source-map \
-				--comments false \
-				-o ${bundledMin}
-		`
+		// await $`
+		// 	npx terser ${bundled} \
+		// 		--module \
+		// 		--compress \
+		// 		--mangle \
+		// 		--source-map \
+		// 		--comments false \
+		// 		-o ${bundledMin}
+		// `
 	}
 }
 

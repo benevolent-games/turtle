@@ -11,7 +11,6 @@ export async function turtleBuildWatch({params}: BuildInputs) {
 	// const ignored = [
 	// 	...stdignore(params.exclude ?? []),
 	// 	`**/*.bundled.js`,
-	// 	`**/*.bundled.min.js`,
 	// ]
 
 	$.spawn("tsc", ["-w"], {stdio: "inherit"})

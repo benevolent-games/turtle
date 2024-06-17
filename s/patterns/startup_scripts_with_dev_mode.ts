@@ -5,7 +5,7 @@ import {PathRouter} from "../build/parts/path/path_router.js"
 export const startup_scripts_with_dev_mode = ({
 		path,
 		importmap = "importmap.json",
-		scripts = [{module: "main.js", bundle: "main.bundled.min.js"}],
+		scripts = [{module: "main.js", bundle: "main.bundled.js"}],
 		es_module_shims = "node_modules/es-module-shims/dist/es-module-shims.wasm.js",
 	}: {
 		path: PathRouter
