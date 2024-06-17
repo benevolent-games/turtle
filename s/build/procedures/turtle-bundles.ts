@@ -1,5 +1,6 @@
 
 import {$} from "zx"
+import {dirname} from "path"
 import {globby} from "globby"
 import {stdignore} from "../parts/stdignore.js"
 
@@ -16,7 +17,7 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 				-p @rollup/plugin-node-resolve \
 				-p @rollup/plugin-wasm \
 				--format es \
-				--file ${bundled}
+				--dir ${dirname(bundled)}
 		`
 		await $`
 			npx terser ${bundled} \
