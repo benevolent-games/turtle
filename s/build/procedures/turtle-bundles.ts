@@ -17,7 +17,8 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 				-p @rollup/plugin-wasm \
 				-p @rollup/plugin-terser \
 				--format es \
-				--dir ${dirname(bundled)}
+				--dir ${dirname(bundled)} \
+				--entryFileNames "[name].min.js"
 		`
 		// await $`
 		// 	npx terser ${bundled} \
