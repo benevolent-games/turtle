@@ -20,15 +20,6 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 				--dir ${dirname(bundled)} \
 				--entryFileNames "[name].min.js"
 		`
-		// await $`
-		// 	npx terser ${bundled} \
-		// 		--module \
-		// 		--compress \
-		// 		--mangle \
-		// 		--source-map \
-		// 		--comments false \
-		// 		-o ${bundledMin}
-		// `
 	}
 }
 
