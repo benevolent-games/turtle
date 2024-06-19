@@ -18,7 +18,7 @@ await cli(process.argv, {
 		build: command({
 			help: `
 				run a standard typescript app build.
-				generate an importmap.json, create a symlink to node_modules, run your ts build, and bundle up your ".bundle.js" files to produce ".bundled.js" files.
+				generate an importmap.json, create a symlink to node_modules, run your ts build, and bundle up your ".bundle.js" files to produce ".bundle.min.js" files.
 			`,
 			args: [],
 			params: buildparams,

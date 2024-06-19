@@ -2,14 +2,18 @@
 import {html} from "../html/html.js"
 import {PathRouter} from "../build/parts/path/path_router.js"
 
+function shouldHash({hash = true}: {hash?: boolean}) {
+	return hash
+}
+
 export const startup_scripts_with_dev_mode = ({
 		path,
 		importmap = "importmap.json",
-		scripts = [{module: "main.js", bundle: "main.bundled.js"}],
+		scripts = [{module: "main.js", bundle: "main.bundle.min.js"}],
 		es_module_shims = "node_modules/es-module-shims/dist/es-module-shims.wasm.js",
 	}: {
 		path: PathRouter
-		scripts?: {module: string, bundle: string}[]
+		scripts?: {module: string, bundle: string, hash?: boolean}[]
 		importmap?: string
 		es_module_shims?: string
 	}) => html`
@@ -45,7 +49,11 @@ export const startup_scripts_with_dev_mode = ({
 			${scripts.map(s => html`
 				script({
 					type: "module-shim",
-					src: "${path.version.root(s.module)}",
+					src: "${
+						shouldHash(s)
+							? path.version.root(s.module)
+							: path.root(s.module)
+					}",
 				})
 			`)}
 
@@ -59,7 +67,11 @@ export const startup_scripts_with_dev_mode = ({
 			${scripts.map(s => html`
 				script({
 					type: "module",
-					src: "${path.version.root(s.bundle)}",
+					src: "${
+						shouldHash(s)
+							? path.version.root(s.bundle)
+							: path.root(s.bundle)
+					}",
 				})
 			`)}
 
