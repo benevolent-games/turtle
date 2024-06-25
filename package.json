@@ -12,7 +12,7 @@
 		"s"
 	],
 	"scripts": {
-		"build": "run-s clean compile permissions demo",
+		"build": "run-s clean compile permissions",
 		"clean": "rm -rf x && mkdir x",
 		"compile": "tsc",
 		"permissions": "chmod +x x/turtle.js",
@@ -20,8 +20,8 @@
 		"http": "http-server x/demo",
 		"watch": "tsc -w",
 		"watch-test": "chokidar 'x/**/*.js' -c 'npm test'",
-		"demo": "node x/cli.js --in='s/demo:x/demo' --out='x/demo' --exclude='**/*.partial.html.js' +verbose",
-		"help": "node x/cli.js +help",
+		"demo": "node x/turtle.js ssg --in=s/demo,x/demo --out=x/demo --exclude=\"**/*.partial.html.js\" -v",
+		"help": "node x/turtle.js --help",
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
