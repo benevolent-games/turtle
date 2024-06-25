@@ -2,7 +2,7 @@
 
 import {$} from "zx"
 import {cli, command} from "@benev/argv"
-import {printZxErrors} from "./errors/print-zx-errors.js"
+import {handleZxErrors} from "./errors/handle-zx-errors.js"
 import {turtleCopy} from "./build/procedures/turtle-copy.js"
 import {turtlePages} from "./build/procedures/turtle-pages.js"
 import {ssgparams, buildparams} from "./build/parts/stdparams.js"
@@ -24,7 +24,7 @@ await cli(process.argv, {
 			args: [],
 			params: buildparams,
 			async execute({params}) {
-				printZxErrors(async() => {
+				await handleZxErrors(async() => {
 					await $`mkdir -p "${params.out}"`
 					await $`npx importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
 					await $`rm -f "${params.out}/node_modules"`

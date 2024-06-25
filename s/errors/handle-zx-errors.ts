@@ -2,7 +2,7 @@
 import {ProcessOutput} from "zx"
 import {ExecutionError} from "@benev/argv"
 
-export async function printZxErrors(fn: () => Promise<void>) {
+export async function handleZxErrors(fn: () => Promise<void>) {
 	try {
 		await fn()
 	}
