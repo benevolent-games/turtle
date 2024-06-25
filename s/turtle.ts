@@ -2,6 +2,7 @@
 
 import {$} from "zx"
 import {cli, command} from "@benev/argv"
+import {printZxErrors} from "./errors/print-zx-errors.js"
 import {turtleCopy} from "./build/procedures/turtle-copy.js"
 import {turtlePages} from "./build/procedures/turtle-pages.js"
 import {ssgparams, buildparams} from "./build/parts/stdparams.js"
@@ -23,12 +24,14 @@ await cli(process.argv, {
 			args: [],
 			params: buildparams,
 			async execute({params}) {
-				await $`mkdir -p "${params.out}"`
-				await $`npx importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
-				await $`rm -f "${params.out}/node_modules"`
-				await $`ln -s "$(realpath node_modules)" "${params.out}/node_modules"`
-				await $`npx tsc`
-				await turtleBundles(params.out, params.exclude)
+				printZxErrors(async() => {
+					await $`mkdir -p "${params.out}"`
+					await $`npx importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
+					await $`rm -f "${params.out}/node_modules"`
+					await $`ln -s "$(realpath node_modules)" "${params.out}/node_modules"`
+					await $`npx tsc`
+					await turtleBundles(params.out, params.exclude)
+				})
 			},
 		}),
 
@@ -72,12 +75,6 @@ await cli(process.argv, {
 				await turtleSsgWatch(o)
 			},
 		}),
-
-		// run: {
-		// 	copy: stdcommand(turtleCopy),
-		// 	scripts: stdcommand(turtleScripts),
-		// 	pages: stdcommand(turtlePages),
-		// },
 
 	},
 }).execute()
