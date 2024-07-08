@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import {$} from "zx"
-import {cli, command} from "@benev/argv"
+import {cli, command, deathWithDignity} from "@benev/argv"
 import {handleZxErrors} from "./errors/handle-zx-errors.js"
 import {turtleCopy} from "./build/procedures/turtle-copy.js"
 import {turtlePages} from "./build/procedures/turtle-pages.js"
@@ -10,6 +10,8 @@ import {turtleBundles} from "./build/procedures/turtle-bundles.js"
 import {turtleScripts} from "./build/procedures/turtle-scripts.js"
 import {turtleSsgWatch} from "./build/procedures/watches/turtle-ssg-watch.js"
 import {turtleBuildWatch} from "./build/procedures/watches/turtle-build-watch.js"
+
+const {onDeath} = deathWithDignity()
 
 await cli(process.argv, {
 	name: "turtle",
@@ -54,8 +56,8 @@ await cli(process.argv, {
 			params: ssgparams,
 			async execute(o) {
 				await Promise.all([
-					turtleBuildWatch(o),
-					turtleSsgWatch(o),
+					turtleBuildWatch(o, onDeath),
+					turtleSsgWatch(o, onDeath),
 				])
 			},
 		}),
@@ -64,7 +66,7 @@ await cli(process.argv, {
 			args: [],
 			params: buildparams,
 			async execute(o) {
-				await turtleBuildWatch(o)
+				await turtleBuildWatch(o, onDeath)
 			},
 		}),
 
@@ -72,7 +74,7 @@ await cli(process.argv, {
 			args: [],
 			params: ssgparams,
 			async execute(o) {
-				await turtleSsgWatch(o)
+				await turtleSsgWatch(o, onDeath)
 			},
 		}),
 
