@@ -21,11 +21,13 @@
 		"watch": "tsc -w",
 		"watch-test": "chokidar 'x/**/*.js' -c 'npm test'",
 		"demo": "node x/turtle.js ssg --in=s/demo,x/demo --out=x/demo --exclude=\"**/*.partial.html.js\" -v",
+		"devlinks": "run-s devlinks-argv",
+		"devlinks-argv": "rm -rf node_modules/@benev/argv && ln -s \"$(realpath ../argv)\" node_modules/@benev/argv",
 		"help": "node x/turtle.js --help",
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
-		"@benev/argv": "^0.3.4",
+		"@benev/argv": "^0.3.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@rollup/plugin-wasm": "^6.2.2",
@@ -34,7 +36,7 @@
 		"globby": "^14.0.2",
 		"http-server": "^14.1.1",
 		"importly": "^0.2.3",
-		"rollup": "^4.18.0",
+		"rollup": "^4.18.1",
 		"terser": "^5.31.1",
 		"zx": "^8.1.4"
 	},
