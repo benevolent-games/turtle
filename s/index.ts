@@ -32,4 +32,5 @@ export * from "./utils/indent.js"
 export * from "./utils/nap.js"
 export * from "./utils/path.js"
 export * from "./utils/repeat_string.js"
+export * from "./utils/templating.js"
 
