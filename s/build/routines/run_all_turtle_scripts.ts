@@ -28,6 +28,7 @@ export async function run_all_turtle_scripts(
 			}
 			catch (error) {
 				log_error(error, "rendering", destination)
+				throw error
 			}
 		}
 	)
@@ -48,6 +49,7 @@ export async function run_all_turtle_scripts(
 		}
 		catch (error) {
 			log_error(error, "executing", path.relative)
+			throw error
 		}
 	}
 

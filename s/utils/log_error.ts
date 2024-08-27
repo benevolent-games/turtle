@@ -1,18 +1,12 @@
 
 import {color} from "@benev/argv"
-
-import {Path} from "./path.js"
 import {indent} from "./indent.js"
 
 export function log_error(error: any, activity?: string, path?: string) {
-
 	if (error instanceof Error)
 		console.error(error_message(error, activity, path))
-
 	else
 		console.error("ERROR!!", color.red(error))
-
-	process.exit(1)
 }
 
 function error_message(error: Error, activity?: string, path?: string) {

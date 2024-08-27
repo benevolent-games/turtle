@@ -24,6 +24,7 @@ export async function build_all_webpages<xContext extends {}>(
 				}
 				catch (error) {
 					log_error(error, "rendering", path.relative)
+					throw error
 				}
 			}
 		)

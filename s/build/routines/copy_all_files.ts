@@ -18,6 +18,7 @@ export async function copy_all_files(
 				}
 				catch (error) {
 					log_error(error, "copying", path.relative)
+					throw error
 				}
 			}
 		)

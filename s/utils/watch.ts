@@ -1,7 +1,7 @@
 
 import chokidar from "chokidar"
+import {OnDeath} from "@benev/argv"
 import {debounce} from "./debounce/debounce.js"
-import { OnDeath } from "@benev/argv"
 
 export async function watch(
 		patterns: string[],
@@ -16,8 +16,13 @@ export async function watch(
 		.on("all", debounce(500, async() => {
 			if (!busy) {
 				busy = true
-				await fn()
-				busy = false
+				try {
+					await fn()
+				}
+				catch (error) {}
+				finally {
+					busy = false
+				}
 			}
 		}))
 
