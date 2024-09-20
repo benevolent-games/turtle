@@ -29,16 +29,11 @@ export async function watch(
 
 	const watcher = chokidar.watch(dirs, {ignored: isAllowed})
 		.on("all", debounce(500, async() => {
-			if (!busy) {
-				busy = true
-				try {
-					await fn()
-				}
-				catch (error) {}
-				finally {
-					busy = false
-				}
-			}
+			if (busy) return undefined
+			busy = true
+			try { await fn() }
+			catch (error) {}
+			finally { busy = false }
 		}))
 
 	onDeath(() => watcher.close())
