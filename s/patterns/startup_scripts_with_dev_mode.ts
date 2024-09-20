@@ -15,7 +15,7 @@ export const startup_scripts_with_dev_mode = ({
 		path: PathRouter
 		scripts?: {module: string, bundle: string, hash?: boolean}[]
 		importmap?: string
-		es_module_shims?: string
+		es_module_shims?: string | null
 	}) => html`
 
 	<script>
@@ -42,13 +42,13 @@ export const startup_scripts_with_dev_mode = ({
 			document.title = "[dev] " + document.title
 
 			script({
-				type: "importmap-shim",
+				type: "${es_module_shims === null ? "importmap" : "importmap-shim"}",
 				src: "${path.version.root(importmap)}",
 			})
 
 			${scripts.map(s => html`
 				script({
-					type: "module-shim",
+					type: "${es_module_shims === null ? "module" : "module-shim"}",
 					src: "${
 						shouldHash(s)
 							? path.version.root(s.module)
@@ -57,10 +57,12 @@ export const startup_scripts_with_dev_mode = ({
 				})
 			`)}
 
-			script({
-				type: "module",
-				src: "${path.root(es_module_shims)}",
-			})
+			${es_module_shims !== null ? html`
+				script({
+					type: "module",
+					src: "${path.root(es_module_shims)}",
+				})
+			` : html``}
 		}
 		else {
 
