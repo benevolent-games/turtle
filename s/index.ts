@@ -19,6 +19,7 @@ export * from "./html/unsanitized.js"
 export * from "./html/untab.js"
 
 export * from "./patterns/easypage.js"
+export * from "./patterns/head-scripts.js"
 export * from "./patterns/startup_scripts_with_dev_mode.js"
 
 export * from "./utils/hashing/apply_file_hash_to_url.js"
