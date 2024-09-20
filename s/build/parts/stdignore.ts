@@ -1,5 +1,5 @@
 
 export function stdignore(ignore: string[]) {
-	return [...ignore, "**/node_modules", "**/.*/"]
+	return [...ignore, "**/node_modules", "**/.*"]
 }
 

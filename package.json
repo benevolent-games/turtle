@@ -36,6 +36,7 @@
 		"globby": "^14.0.2",
 		"http-server": "^14.1.1",
 		"importly": "^0.2.3",
+		"minimatch": "^10.0.1",
 		"rollup": "^4.22.0",
 		"terser": "^5.33.0",
 		"zx": "^8.1.8"

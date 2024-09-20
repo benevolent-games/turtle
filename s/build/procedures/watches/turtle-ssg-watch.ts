@@ -11,12 +11,11 @@ import {turtleScripts} from "../turtle-scripts.js"
 export async function turtleSsgWatch(o: SsgInputs, onDeath: OnDeath) {
 	const {params} = o
 
-	const ignored = stdignore([])
-	const dedupedDirs = [...new Set([...params.in, params.out])]
-	const patterns = dedupedDirs
-		.map(dir => `${dir}/**/*.{js,json,css}`)
+	const ignored = stdignore(params.exclude ?? [])
+	const dirs = [...new Set([...params.in, params.out])]
+	const patterns = ["**/*.{js,json,css}"]
 
-	await watch(patterns, ignored, onDeath, async() => {
+	await watch(dirs, patterns, ignored, onDeath, async() => {
 		await turtleCopy(o)
 		await turtleScripts(o)
 		await turtlePages(o)
