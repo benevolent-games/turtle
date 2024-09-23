@@ -1,6 +1,10 @@
 
 # turtle changelog
 
+### v0.6.2
+
+- make rollup `--silent` unless turtle receives `--verbose` param
+
 ### v0.6.1
 
 - cleanup annoying rollup warnings
