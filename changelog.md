@@ -9,7 +9,6 @@
 - ! execute turtle scripts *before* the html build stage
   - this allows you to write files that can be hash-versioned in your templates
 - add `read_file` function
-- add `Array.prototype.at` polyfill to bundle
 
 ### v0.4.0 (2023-06-20)
 
