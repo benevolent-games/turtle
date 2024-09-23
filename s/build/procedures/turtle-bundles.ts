@@ -4,8 +4,8 @@ import {dirname} from "path"
 import {globby} from "globby"
 import {stdignore} from "../parts/stdignore.js"
 
-export async function turtleBundles(cwd: string, excludes: string[] = []) {
-	const ignore = stdignore(excludes)
+export async function turtleBundles(cwd: string, excludes: undefined | string[], verbose: boolean) {
+	const ignore = stdignore(excludes ?? [])
 	const bundles = await globby(["**/*.bundle.js"], {cwd, ignore})
 
 	for (const relativePath of bundles) {
@@ -16,6 +16,7 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 				-p @rollup/plugin-wasm \
 				-p @rollup/plugin-terser \
 				--format es \
+				${verbose ? "" : "--silent"} \
 				--dir ${dirname(bundle)} \
 				--entryFileNames "[name].min.js"
 		`

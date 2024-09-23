@@ -32,7 +32,7 @@ await cli(process.argv, {
 					await $`rm -f "${params.out}/node_modules"`
 					await $`ln -s "$(realpath node_modules)" "${params.out}/node_modules"`
 					await $`npm exec -- tsc`
-					await turtleBundles(params.out, params.exclude)
+					await turtleBundles(params.out, params.exclude, params.verbose)
 				})
 			},
 		}),
