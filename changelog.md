@@ -1,6 +1,11 @@
 
 # turtle changelog
 
+### v0.6.1
+
+- cleanup annoying rollup warnings
+- switch to `npm exec` from `npx`, i dunno it's supposed to be better?
+
 ### v0.6.0
 
 - ! all-new turtle cli
@@ -10,6 +15,8 @@
   - this allows you to write files that can be hash-versioned in your templates
 - add `read_file` function
 
+--------------------------------
+
 ### v0.4.0 (2023-06-20)
 
 - ! replace `startup_scripts_with_debug_mode` with the new `startup_scripts_with_dev_mode`
@@ -17,6 +24,8 @@
   - `?dev=false` force-disables dev mode (loads the bundle)
   - `?dev=true` force-enables dev mode (loads es modules)
   - the new routine adds the prefix `[dev]` to the document title, to make it obvious when you're in dev mode
+
+--------------------------------
 
 ### v0.3.2 (2023-06-13)
 
@@ -35,12 +44,16 @@
   - see more detail on `path` in the readme
 - ! `HashVersionerError` replaced by `HashingError`
 
+--------------------------------
+
 ### v0.2.0 (2023-06-10)
 
 - ! rename cli arg `excludes` to `exclude`
 - `script_directory` is now provided to turtle scripts
 - reworked `base` calculation
 - errors now print stack traces
+
+--------------------------------
 
 ### v0.1.2
 
