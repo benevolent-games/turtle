@@ -1,7 +1,9 @@
 
 # turtle changelog
 
-- ! new turtle cli
+### v0.6.0
+
+- ! all-new turtle cli
   - changed the way bundling works, now support rollup, see `turtle --help`
   - reworked `startup_scripts_with_dev_mode` to support multiple scripts/bundles
 - ! execute turtle scripts *before* the html build stage
