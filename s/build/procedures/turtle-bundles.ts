@@ -11,7 +11,7 @@ export async function turtleBundles(cwd: string, excludes: string[] = []) {
 	for (const relativePath of bundles) {
 		const bundle = `${cwd}/${relativePath}`
 		await $`
-			npx rollup ${bundle} \
+			npm exec -- rollup ${bundle} \
 				-p @rollup/plugin-node-resolve \
 				-p @rollup/plugin-wasm \
 				-p @rollup/plugin-terser \

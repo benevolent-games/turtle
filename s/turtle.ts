@@ -28,10 +28,10 @@ await cli(process.argv, {
 			async execute({params}) {
 				await handleZxErrors(async() => {
 					await $`mkdir -p "${params.out}"`
-					await $`npx importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
+					await $`npm exec -- importly --host=node_modules < package-lock.json > "${params.out}/importmap.json"`
 					await $`rm -f "${params.out}/node_modules"`
 					await $`ln -s "$(realpath node_modules)" "${params.out}/node_modules"`
-					await $`npx tsc`
+					await $`npm exec -- tsc`
 					await turtleBundles(params.out, params.exclude)
 				})
 			},
