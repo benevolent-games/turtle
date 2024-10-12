@@ -1,4 +1,5 @@
 
+import braces from "braces"
 import chokidar from "chokidar"
 import {minimatch} from "minimatch"
 import {OnDeath} from "@benev/argv"
@@ -17,10 +18,12 @@ export async function watch(
 
 	const isAllowed = (path: string) => {
 		const isIgnored = ignored
+			.flatMap(pattern => braces(pattern))
 			.flatMap(pattern => [pattern, pattern + "/**"])
 			.some(pattern => minimatch(path, pattern))
 
 		const isMatching = patterns
+			.flatMap(pattern => braces(pattern))
 			.flatMap(pattern => [pattern, pattern + "/**"])
 			.some(pattern => minimatch(path, pattern))
 
