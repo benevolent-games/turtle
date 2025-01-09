@@ -1,17 +1,28 @@
 
 # turtle changelog
 
-### v0.6.2
+## v0.6
 
+### v0.6.5 — *2025-01-09*
+- added social card feature
+  - `renderSocialCard` function to render html meta tags for open graph protocol, to make your page's links fancy on social media like facebook and discord
+  - `SocialCard` type for the parameters
+  - `asSocialCard` helper identity function for the params
+
+### v0.6.4
+- updated dependencies
+
+### v0.6.3
+- fixed watch mode
+
+### v0.6.2
 - make rollup `--silent` unless turtle receives `--verbose` param
 
 ### v0.6.1
-
 - cleanup annoying rollup warnings
 - switch to `npm exec` from `npx`, i dunno it's supposed to be better?
 
 ### v0.6.0
-
 - ! all-new turtle cli
   - changed the way bundling works, now support rollup, see `turtle --help`
   - reworked `startup_scripts_with_dev_mode` to support multiple scripts/bundles
