@@ -3,7 +3,7 @@ import {html} from "../html/html.js"
 import {Html} from "../html/template.js"
 import {PathRouter} from "../build/parts/path/path_router.js"
 
-export const easypage = ({path, title, css, head, body, dark = false}: {
+export const easypage = ({path, title, css, head, body, dark}: {
 		path: PathRouter
 		title: string
 		css?: string
@@ -17,9 +17,9 @@ export const easypage = ({path, title, css, head, body, dark = false}: {
 		<head>
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width,initial-scale=1"/>
-			${dark
-				? html`<meta name="darkreader" content="dark"/>`
-				: html``}
+			${dark ? html`
+				<meta name="darkreader-lock"/>
+			` : undefined}
 			<title>${title}</title>
 			${css
 				? html`<link rel="stylesheet" href="${path.version.root(css)}"/>`
