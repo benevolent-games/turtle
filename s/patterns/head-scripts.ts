@@ -30,7 +30,8 @@ export function headScripts({
 				: (
 					location.host.startsWith("localhost") ||
 					location.host.startsWith("192.168.") ||
-					location.host.startsWith("10.0.")
+					location.host.startsWith("10.0.") ||
+					location.host.includes("trycloudflare.com")
 				)
 
 			// create and insert a script element
