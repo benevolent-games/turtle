@@ -14,3 +14,7 @@ export async function write_file(path: string, text: string) {
 	return writeFile(path, text.toString(), encoding)
 }
 
+export async function read_json(path: string) {
+	return JSON.parse(await read_file(path))
+}
+
