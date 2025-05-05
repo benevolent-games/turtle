@@ -10,16 +10,21 @@ export async function turtleBundles(cwd: string, excludes: undefined | string[],
 
 	for (const relativePath of bundles) {
 		const bundle = `${cwd}/${relativePath}`
-		await $`
-			npm exec -- rollup ${bundle} \
-				-p @rollup/plugin-node-resolve \
-				-p @rollup/plugin-wasm \
-				-p @rollup/plugin-terser \
-				--format es \
-				${verbose ? "" : "--silent"} \
-				--dir ${dirname(bundle)} \
-				--entryFileNames "[name].min.js"
-		`
+
+		const args = [
+			"--input", bundle,
+			"-p", "@rollup/plugin-node-resolve",
+			"-p", "@rollup/plugin-wasm",
+			"-p", "@rollup/plugin-terser",
+			"--format", "es",
+			"--dir", dirname(bundle),
+			"--entryFileNames", "[name].min.js",
+		]
+
+		if (!verbose)
+			args.push('--silent')
+
+		await $`npx rollup ${args}`
 	}
 }
 
