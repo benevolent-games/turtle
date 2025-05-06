@@ -1,7 +1,18 @@
 
 # turtle changelog
+- 🟥 breaking change
+- 🔶 deprecation or possible breaking change
+- 🍏 harmless addition, fix, or enhancement
 
 ## v0.6
+
+### v0.6.12
+- 🔶 removed `HashingError`, now we stderr a message and throw whatever error bubbled up
+- 🍏 tweak hashing to work on text or binary files
+- 🍏 add `read_json` fn
+- 🍏 add `git_latest_tag` fn (actually, you should use read_json instead and read the package.json version field)
+- 🍏 fix darkreader opt-out for easypage dark true
+- 🍏 fix zx args handling
 
 ### v0.6.5 — *2025-01-09*
 - added social card feature
