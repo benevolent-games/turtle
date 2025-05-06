@@ -9,8 +9,6 @@ export * from "./build/types/loggers.js"
 export * from "./build/types/script_meta.js"
 export * from "./build/types/template_basics.js"
 
-export * from "./errors/hashing_error.js"
-
 export * from "./html/helpers.js"
 export * from "./html/template.js"
 export * from "./html/html.js"
