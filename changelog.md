@@ -8,6 +8,7 @@
 
 ### v0.6.12
 - 🔶 removed `HashingError`, now we stderr a message and throw whatever error bubbled up
+- 🍏 adjust dev mode detection to be more strict (localhost, trycloudflare.com, etc)
 - 🍏 tweak hashing to work on text or binary files
 - 🍏 add `read_json` fn
 - 🍏 add `git_latest_tag` fn (actually, you should use read_json instead and read the package.json version field)

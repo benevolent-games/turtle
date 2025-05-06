@@ -28,10 +28,10 @@ export function headScripts({
 			const isDevMode = params.has("dev")
 				? params.get("dev") !== "false"
 				: (
-					location.host.startsWith("localhost") ||
-					location.host.startsWith("192.168.") ||
-					location.host.startsWith("10.0.") ||
-					location.host.includes("trycloudflare.com")
+					location.hostname === "localhost" ||
+					location.hostname.startsWith("192.168.") ||
+					location.hostname.startsWith("10.0.") ||
+					location.hostname.endsWith("trycloudflare.com")
 				)
 
 			// create and insert a script element
